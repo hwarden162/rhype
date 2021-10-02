@@ -1,0 +1,18 @@
+Package: hypR
+Title: Work With Hypergraphs In R
+Version: 0.0.0.9000
+Authors@R: 
+    person("Hugh", "Warden", , "hugh.warden@outlook.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-4308-7316"))
+Description: Create and manipulate hypergraph objects. This early version of
+    hypR allows for the output of matrices associated with the hypergraphs 
+    themselves. It also uses these matrices to calculate hypergraph spectra and
+    perform spectral comparison. Functionality coming soon includes calculation
+    of hyperpaths and hypergraph centrality measures.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Imports: 
+    R6
