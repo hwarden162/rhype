@@ -98,7 +98,7 @@ Hypergraph <- R6::R6Class(
       cat("    Number of vertices: ", self$get_numv(), "\n")
       cat("    Number of hyperedges: ", length(self$get_elist()), "\n")
       cat("    Oriented: ", self$get_oriented())
-      cat("    Directed: ", self$get_directed())
+      cat("    Directed: ", self$get_directed(), "\n")
       cat("    Real Coefficients: ", self$get_real_coef())
       cat("    Weighted: ", self$get_weighted(), "\n")
     }
