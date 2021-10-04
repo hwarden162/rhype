@@ -119,8 +119,12 @@ hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
       vnames <- as.character(1:numv)
     }
 
-    tail_list <- apply(inc_mat[[1]], 2, function(x) {which(x != 0)})
-    head_list <- apply(inc_mat[[2]], 2, function(x) {which(x != 0)})
+    tail_list <- apply(inc_mat[[1]], 2, function(x) {
+      which(x != 0)
+    })
+    head_list <- apply(inc_mat[[2]], 2, function(x) {
+      which(x != 0)
+    })
 
     elist <- list()
     for (i in 1:length(tail_list)) {
@@ -147,7 +151,6 @@ hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
         inc_mat = inc_mat
       )
     )
-
   } else {
     inc_mat <- as.matrix(inc_mat)
 
@@ -159,7 +162,9 @@ hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
       vnames <- as.character(1:numv)
     }
 
-    elist <- apply(inc_mat, 2, function(x) {which(x != 0)})
+    elist <- apply(inc_mat, 2, function(x) {
+      which(x != 0)
+    })
 
     enames <- as.character(colnames(inc_mat))
 

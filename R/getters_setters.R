@@ -134,7 +134,3 @@ is_directed <- function(hype) {
 has_real_coef <- function(hype) {
   hype$get_real_coef()
 }
-
-
-
-

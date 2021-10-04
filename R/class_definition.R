@@ -1,7 +1,7 @@
 Hypergraph <- R6::R6Class(
   "Hypergraph",
   public = list(
-    #Getters and Setters ---
+    # Getters and Setters ---
     get_numv = function() {
       private$numv
     },
@@ -104,7 +104,7 @@ Hypergraph <- R6::R6Class(
     }
   ),
   private = list(
-    #Private Member Variables ---
+    # Private Member Variables ---
     numv = NA,
     elist = NA,
     vnames = NULL,
