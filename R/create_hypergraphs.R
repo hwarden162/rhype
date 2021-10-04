@@ -92,3 +92,99 @@ hype_from_edge_list <- function(elist, directed = FALSE) {
     directed = directed
   )
 }
+
+#' Create a Hypergraph From an Incidence Matrix
+#'
+#' @param inc_mat An incidence matrix or, for an oriented hypergraph, a list
+#'     of two incidence matrices.
+#' @param directed A logical value representing whether the hypergraph should
+#'     be directed.
+#' @param real_coef A logical value representing whether the hypergraph should
+#'     have real coefficients associating vertices to hyperedges.
+#'
+#' @return A hypergraph object with the given incidence structure.
+#' @export
+#'
+#' @examples
+hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
+  if (is.list(inc_mat)) {
+    inc_mat[[1]] <- as.matrix(inc_mat[[1]])
+    inc_mat[[2]] <- as.matrix(inc_mat[[2]])
+
+    numv <- dim(inc_mat[[1]])[1]
+
+    if (!is.null(rownames(inc_mat[[1]]))) {
+      vnames <- as.character(rownames(inc_mat[[1]]))
+    } else {
+      vnames <- as.character(1:numv)
+    }
+
+    tail_list <- apply(inc_mat[[1]], 2, function(x) {which(x != 0)})
+    head_list <- apply(inc_mat[[2]], 2, function(x) {which(x != 0)})
+
+    elist <- list()
+    for (i in 1:length(tail_list)) {
+      elist[[i]] <- list(from = tail_list[[i]], to = head_list[[i]])
+    }
+
+    enames <- as.character(colnames(inc_mat[[1]]))
+
+    oriented <- TRUE
+
+    if (!real_coef) {
+      inc_mat <- NULL
+    }
+
+    return(
+      Hypergraph$new(
+        numv = numv,
+        elist = elist,
+        vnames = vnames,
+        enames = enames,
+        oriented = oriented,
+        directed = directed,
+        real_coef = real_coef,
+        inc_mat = inc_mat
+      )
+    )
+
+  } else {
+    inc_mat <- as.matrix(inc_mat)
+
+    numv <- dim(inc_mat)[1]
+
+    if (!is.null(rownames(inc_mat))) {
+      vnames <- as.character(rownames(inc_mat))
+    } else {
+      vnames <- as.character(1:numv)
+    }
+
+    elist <- apply(inc_mat, 2, function(x) {which(x != 0)})
+
+    enames <- as.character(colnames(inc_mat))
+
+    oriented <- FALSE
+
+    if (directed) {
+      warning("\n Specified incidnece matrix is non-orientable, so can't be directed. Creating unoriented hypergraph instead.")
+      directed <- FALSE
+    }
+
+    if (!real_coef) {
+      inc_mat <- NULL
+    }
+
+    return(
+      Hypergraph$new(
+        numv = numv,
+        elist = elist,
+        vnames = vnames,
+        enames = enames,
+        oriented = oriented,
+        directed = directed,
+        real_coef = real_coef,
+        inc_mat = inc_mat
+      )
+    )
+  }
+}
