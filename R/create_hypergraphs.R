@@ -60,8 +60,8 @@ hype_from_edge_list <- function(elist, directed = FALSE) {
     elist <- lapply(
       elist,
       function(x) {
-        entry1 <- lapply(x[[1]], as.character)
-        entry2 <- lapply(x[[2]], as.character)
+        entry1 <- as.character(x[[1]])
+        entry2 <- as.character(x[[2]])
         list(entry1, entry2)
       }
     )
