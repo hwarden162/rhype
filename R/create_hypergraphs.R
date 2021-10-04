@@ -22,9 +22,11 @@ hype_from_edge_list <- function(elist, directed = FALSE) {
   if (length(elist) == 0) {
     warning("\n Hyperedge list is empty, it is assumed that the hypergraph is unoriented")
     # Returning the empty hypergaph
-    Hypergraph$new(
-      numv = 0,
-      elist = list()
+    return(
+      Hypergraph$new(
+        numv = 0,
+        elist = list()
+      )
     )
   }
 
