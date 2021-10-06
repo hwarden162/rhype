@@ -51,3 +51,34 @@ incidence_matrix <- function(hype, augment_oriented = TRUE) {
     return(inc_mat)
   }
 }
+
+adjacency_matrix <- function(hype, normalise = TRUE, self_adj = TRUE) {
+  inc_mat <- incidence_matrix(hype)
+
+  if (hype$get_weighted()) {
+    eweights <- hype$get_eweights()
+  } else {
+    eweights <- rep(1, length(hype$get_elist()))
+  }
+
+  if (hype$get_oriented()) {
+    adj_mat <- inc_mat[[1]] %*% (eweights * t(inc_mat[[2]]))
+  } else {
+    adj_mat <- inc_mat %*% (eweights * t(inc_mat))
+  }
+
+  if (normalise) {
+    adj_mat <- matrix(as.numeric(adj_mat != 0), nrow = dim(adj_mat)[1])
+  }
+
+  if (!self_adj) {
+    diag(adj_mat) <- 0
+  }
+
+  rownames(adj_mat) <- hype$get_vnames()
+  colnames(adj_mat) <- hype$get_vnames()
+
+  return(adj_mat)
+}
+
+
