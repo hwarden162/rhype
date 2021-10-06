@@ -34,7 +34,6 @@ incidence_matrix <- function(hype, augment_oriented = TRUE) {
     }
 
     return(inc_mat)
-
   } else {
     elist <- hype$get_elist()
     numv <- hype$get_numv()
@@ -80,5 +79,3 @@ adjacency_matrix <- function(hype, normalise = TRUE, self_adj = TRUE) {
 
   return(adj_mat)
 }
-
-
