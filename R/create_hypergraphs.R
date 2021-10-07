@@ -107,38 +107,56 @@ hype_from_edge_list <- function(elist, directed = FALSE) {
 #'
 #' @examples
 hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
+  # Checking if the incidence matrix is for an oriented hypergraph
   if (is.list(inc_mat)) {
+    # Checking object is a matrix
     inc_mat[[1]] <- as.matrix(inc_mat[[1]])
     inc_mat[[2]] <- as.matrix(inc_mat[[2]])
 
+    # Finding the number of vertices
     numv <- dim(inc_mat[[1]])[1]
 
+    # Finding the names of the vertices, or assigning them if they don't exist
     if (!is.null(rownames(inc_mat[[1]]))) {
       vnames <- as.character(rownames(inc_mat[[1]]))
     } else {
       vnames <- as.character(1:numv)
     }
 
+    # Finding tail elements of hyperedges
     tail_list <- apply(inc_mat[[1]], 2, function(x) {
       which(x != 0)
     })
+    # Finding head elements of hyperedges
     head_list <- apply(inc_mat[[2]], 2, function(x) {
       which(x != 0)
     })
 
+    # Generating hyperedge list
     elist <- list()
     for (i in 1:length(tail_list)) {
-      elist[[i]] <- list(from = tail_list[[i]], to = head_list[[i]])
+      elist[[i]] <- list(tail_list[[i]], head_list[[i]])
+      if (directed) {
+        names(elist[[i]]) <- c("from", "to")
+      }
     }
 
-    enames <- as.character(colnames(inc_mat[[1]]))
+    # Finding hyperedge names
+    if (!is.null(colnames(inc_mat[[1]]))) {
+      enames <- as.character(colnames(inc_mat[[1]]))
+    } else {
+      enames <- NULL
+    }
 
+    # Setting the hypergraph as oriented
     oriented <- TRUE
 
+    # Removing the incidence matrix if real_coef is false
     if (!real_coef) {
       inc_mat <- NULL
     }
 
+    # Returning a hypergraph object
     return(
       Hypergraph$new(
         numv = numv,
@@ -152,33 +170,46 @@ hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
       )
     )
   } else {
+    # Converting parameter to a matrix
     inc_mat <- as.matrix(inc_mat)
 
+    # Finding the number of vertices
     numv <- dim(inc_mat)[1]
 
+    # Finding vertex names
     if (!is.null(rownames(inc_mat))) {
       vnames <- as.character(rownames(inc_mat))
     } else {
       vnames <- as.character(1:numv)
     }
 
+    # Generating hyperedge list
     elist <- apply(inc_mat, 2, function(x) {
       which(x != 0)
     })
 
-    enames <- as.character(colnames(inc_mat))
+    # Finding hyperedge names
+    if (!is.null(colnames(inc_mat))) {
+      enames <- as.character(colnames(inc_mat))
+    } else {
+      enames <- NULL
+    }
 
+    # Setting the hypergraph as unoriented
     oriented <- FALSE
 
+    # If directed is set true but hypergraph is unoriented, outputting warning
     if (directed) {
       warning("\n Specified incidnece matrix is non-orientable, so can't be directed. Creating unoriented hypergraph instead.")
       directed <- FALSE
     }
 
+    # If real_coef is false, setting the incidence matrix to NULL
     if (!real_coef) {
       inc_mat <- NULL
     }
 
+    # Returning the hypergraph
     return(
       Hypergraph$new(
         numv = numv,
