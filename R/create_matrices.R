@@ -1,3 +1,17 @@
+#' Pseudo-Invert a Vector
+#'
+#' @param vec A vector of numbers
+#'
+#' @return A vector of pseudo-inverted numbers
+pseudo_invert <- function(vec) {
+  for (i in 1:length(vec)) {
+    if (vec[i] != 0) {
+      vec[i] <- 1/vec[i]
+    }
+  }
+  return(vec)
+}
+
 incidence_matrix <- function(hype, augment_oriented = TRUE) {
   if (hype$get_real_coef()) {
     return(hype$get_inc_mat())
@@ -78,4 +92,36 @@ adjacency_matrix <- function(hype, normalise = TRUE, self_adj = TRUE) {
   colnames(adj_mat) <- hype$get_vnames()
 
   return(adj_mat)
+}
+
+laplacian_matrix <- function(hype) {
+  if (hype$get_oriented()) {
+    stop("\n \u2716 This function is not yet available for oriented hypergraphs")
+  }
+
+  adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = FALSE)
+  deg <- apply(adj_mat, 1, sum)
+  lap_mat <- -1 * adj_mat
+  diag(lap_mat) <- deg
+  return(lap_mat)
+}
+
+vert_norm_lap_mat <- function(hype) {
+  if (hype$get_oriented()) {
+    stop("\n \u2716 This function is not yet available for oriented hypergraphs")
+  }
+
+  lap_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = TRUE)
+  lap_mat <- pseudo_invert(diag(lap_mat)) * lap_mat
+  return(lap_mat)
+}
+
+hype_norm_lap_mat <- function(hype) {
+  if (hype$get_oriented()) {
+    stop("\n \u2716 This function is not yet available for oriented hypergraphs")
+  }
+
+  inc_mat <- incidence_matrix(hype)
+  lap_mat <- t(inc_mat) %*% (pseudo_invert(degree(hype, method = "hyperedge")) * inc_mat)
+  return(lap_mat)
 }
