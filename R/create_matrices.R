@@ -6,7 +6,7 @@
 pseudo_invert <- function(vec) {
   for (i in 1:length(vec)) {
     if (vec[i] != 0) {
-      vec[i] <- 1/vec[i]
+      vec[i] <- 1 / vec[i]
     }
   }
   return(vec)
