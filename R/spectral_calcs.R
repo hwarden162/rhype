@@ -47,7 +47,7 @@ spectral_distance <- function(hype1, hype2, matrix = "laplacian") {
 #' @param matrix The matrix to calculate the spectra with respect to. Out of
 #' `"vert_norm_lap_mat"` and `"hype_norm_lap_mat"`
 #'
-#' @return
+#' @return The spectral distance from the disconnected hypergraph
 #' @export
 #'
 #' @examples

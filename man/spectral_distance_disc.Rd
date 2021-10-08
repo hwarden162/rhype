@@ -13,7 +13,7 @@ spectral_distance_disc(hype, matrix = "vert_norm_lap_mat")
 \code{"vert_norm_lap_mat"} and \code{"hype_norm_lap_mat"}}
 }
 \value{
-
+The spectral distance from the disconnected hypergraph
 }
 \description{
 Find the Spectral Distance From the Fully Disconnected Hypergraph
