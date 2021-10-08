@@ -13,5 +13,6 @@ vert_norm_lap_mat(hype)
 The vertex normalised laplacian matrix of the hypergraph
 }
 \description{
-Find the Vertex Normalised Laplacian Matrix of a Hypergraph
+As defined by Jurgen Jost and Raffaella Mulas
+\url{doi:https://doi.org/10.1016/j.aim.2019.05.025}
 }
