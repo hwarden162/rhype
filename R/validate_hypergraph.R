@@ -210,7 +210,7 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
       }
       errorMessageMin <- paste(errorMessageMin, "\2139 The hypergraph is directed but the saved incidence matrix does not have \"from\" and \"to\" as names.\n")
     } else {
-      if (names(inc_mat) != c("from", "to")) {
+      if (all(names(inc_mat) != c("from", "to"))) {
         if (isValid) {
           isValid <- NULL
         }
