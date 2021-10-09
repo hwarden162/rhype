@@ -92,15 +92,6 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 The number of hyperedges is not equal to the length of vectors storing hyperedge names. \n")
   }
 
-  #Checking elist names against enames
-  if (!is.null(names(elist)) & !is.null(enames)) {
-    if (sort(names(elist)) != sort(enames)) {
-      isValid <- FALSE
-      major_faults <- major_faults + 1
-      errorMessageMaj <- paste(errorMessageMaj, "\u2716 The names of the hyperedges stored in the object are not the same as those stored in the hyperedge list. \n")
-    }
-  }
-
   #Checking elist names are stored
   if (is.null(names(elist))) {
     if (isValid) {
@@ -138,10 +129,22 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 The vertex names are not stored as characters. \n")
   }
 
+  #Checking vertex names are unique
+  if (length(vnames) != length(unique(vnames))) {
+    isValid <- FALSE
+    errorMessageMaj <- paste(errorMessageMaj, "\u2716 There are two or more vertices with the same name.\n")
+  }
+
   #Checking hyperedge names are characters
-  if (!is.character(enames)) {
+  if (!is.character(enames) & !is.null(enames)) {
     isValid <- FALSE
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 The hyperedge names are not stored as characters. \n")
+  }
+
+  #Checking hyperedge names are unique
+  if (length(enames) != length(unique(enames))) {
+    isValid <- FALSE
+    errorMessageMaj <- paste(errorMessageMaj, "\u2716 There are two or more hyperedges with the same name.\n")
   }
 
   #Checking weighted against vweights and eweights
