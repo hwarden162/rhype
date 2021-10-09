@@ -62,6 +62,7 @@ example_hype <- function(
   #Setting the vertex and hyperedge names
   vnames <- paste0("v", 1:4)
   enames <- paste0("h", 1:2)
+  names(elist) <- enames
 
   #Setting vertex and hyperedge weights
   if (vertex_weighted & edge_weighted) {
