@@ -171,7 +171,7 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
   #Checking oriented against elist
   if (length(elist) > 0) {
     if (oriented) {
-      if (!all(as.logical(lapply(elist, is.list)))) {
+      if (!all(as.logical(lapply(elist, is.list)), na.rm = TRUE)) {
         isValid <- FALSE
         errorMessageMaj <- paste(errorMessageMaj, "\u2716 The hypergraph is oriented but not all the hyperedges are in oriented format.\n")
       }
@@ -192,8 +192,9 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
     }
   }
 
+  #Checking if a directed hypergraph has hyperedge end names
   if (directed) {
-    if (!all(as.logical(lapply(elist, function(x) {names(x) == c("from", "to")})))) {
+    if (!all(as.logical(lapply(elist, function(x) {names(x) == c("from", "to")})), na.rm = TRUE)) {
       if (isValid) {
         isValid <- NULL
       }
