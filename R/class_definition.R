@@ -21,10 +21,10 @@ Hypergraph <- R6::R6Class(
       private$vnames <- new_vnames
     },
     get_vweights = function() {
-      private$eweights
+      private$vweights
     },
-    set_vweights = function(new_eweights) {
-      private$eweights <- new_eweights
+    set_vweights = function(new_vweights) {
+      private$eweights <- new_vweights
     },
     get_enames = function() {
       private$enames
