@@ -66,13 +66,13 @@ example_hype <- function(
   #Setting vertex and hyperedge weights
   if (vertex_weighted & edge_weighted) {
     vweights <- 1:4
-    eweights <- 1:4
+    eweights <- 1:2
   } else if (vertex_weighted & !edge_weighted) {
     vweights <- 1:4
-    eweights <- rep(1,4)
+    eweights <- rep(1,2)
   } else if (!vertex_weighted & edge_weighted) {
     vweights <- rep(1,4)
-    eweights <- 1:4
+    eweights <- 1:2
   } else {
     vweights <- NULL
     eweights <- NULL
