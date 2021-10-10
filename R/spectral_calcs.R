@@ -9,7 +9,7 @@
 #'
 #' @examples
 spectra <- function(hype, matrix = "laplacian") {
-  #Finding the eigen decomposition of the relevant matrix
+  # Finding the eigen decomposition of the relevant matrix
   if (matrix == "laplacian") {
     return(eigen(laplacian_matrix(hype)))
   } else if (matrix == "adjacency") {
@@ -35,13 +35,13 @@ spectra <- function(hype, matrix = "laplacian") {
 #'
 #' @examples
 spectral_distance <- function(hype1, hype2, matrix = "laplacian") {
-  #Finding the eigenvalues of both hypergraphs
+  # Finding the eigenvalues of both hypergraphs
   eigen1 <- spectra(hype1, matrix)$values
   eigen2 <- spectra(hype2, matrix)$values
 
-  #Fiding the spectral distance
+  # Fiding the spectral distance
   spec_dist <- sum(abs(eigen1 - eigen2))
-  #Returning the spectral distance
+  # Returning the spectral distance
   return(spec_dist)
 }
 
@@ -56,18 +56,18 @@ spectral_distance <- function(hype1, hype2, matrix = "laplacian") {
 #'
 #' @examples
 spectral_distance_disc <- function(hype, matrix = "vert_norm_lap_mat") {
-  #Checking the matrix is of a valid type
+  # Checking the matrix is of a valid type
   if ((matrix != "vert_norm_lap_mat") & (matrix != "hype_norm_lap_mat")) {
     stop("\n \u2716 Function only valid for vertex/hyperedge normalised laplacians")
   }
 
-  #Finding the spectra of the given hypergraph
+  # Finding the spectra of the given hypergraph
   eigen1 <- spectra(hype, matrix)$values
-  #Finding the spectra of the respective disconnected hypergraph
+  # Finding the spectra of the respective disconnected hypergraph
   eigen2 <- rep(1, length(eigen1))
 
-  #Finding the spectral distance between the hypergraphs
+  # Finding the spectral distance between the hypergraphs
   spec_dist <- sum(abs(eigen1 - eigen2))
-  #Returning the spectral distance
+  # Returning the spectral distance
   return(spec_dist)
 }

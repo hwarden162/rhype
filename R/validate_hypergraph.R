@@ -27,17 +27,17 @@
 #' @examples
 validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
   numv <- hype$get_numv()
-  elist = hype$get_elist()
-  nume <- length(elist) #Equal to the number of hyperedges
-  vnames = hype$get_vnames()
-  vweights = hype$get_vweights()
-  enames = hype$get_enames()
-  eweights = hype$get_eweights()
-  weighted = hype$get_weighted()
-  oriented = hype$get_oriented()
-  directed = hype$get_directed()
-  real_coef = hype$get_real_coef()
-  inc_mat = hype$get_inc_mat()
+  elist <- hype$get_elist()
+  nume <- length(elist) # Equal to the number of hyperedges
+  vnames <- hype$get_vnames()
+  vweights <- hype$get_vweights()
+  enames <- hype$get_enames()
+  eweights <- hype$get_eweights()
+  weighted <- hype$get_weighted()
+  oriented <- hype$get_oriented()
+  directed <- hype$get_directed()
+  real_coef <- hype$get_real_coef()
+  inc_mat <- hype$get_inc_mat()
 
   isValid <- TRUE
   major_faults <- 0
@@ -45,7 +45,7 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
   errorMessageMaj <- ""
   errorMessageMin <- ""
 
-  #Checking numv against elist
+  # Checking numv against elist
   if (numv != length(unique(unlist(elist)))) {
     if (isValid) {
       isValid <- NULL
@@ -54,21 +54,21 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
     errorMessageMin <- paste(errorMessageMin, "\u2139 The number of vertices recorded and the number of vertices contained in the hyperedge list is different. This is expected if and only if you have an isolated vertex in your hypergraph. \n")
   }
 
-  #Checking numv against vnames
+  # Checking numv against vnames
   if (numv != length(vnames)) {
     isValid <- FALSE
-    major_faults <- major_faults +1
+    major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 The number of vertices is not equal to the length of the vector containing the vertex names. \n")
   }
 
-  #Checking numv against vweights if weighted
+  # Checking numv against vweights if weighted
   if ((numv != length(vweights)) & weighted) {
     isValid <- FALSE
     major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 The number of vertices is not equal to the length of the vector containing the vertex weights and the hypergraph is weighted. \n")
   }
 
-  #Checing numv against inc_mat
+  # Checing numv against inc_mat
   if (real_coef) {
     if (oriented) {
       if ((dim(inc_mat[[1]])[1] != numv) | (dim(inc_mat[[2]])[1] != numv)) {
@@ -85,14 +85,14 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
     }
   }
 
-  #Checking nume against elist
+  # Checking nume against elist
   if (nume != length(enames)) {
     isValid <- FALSE
     major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 The number of hyperedges is not equal to the length of vectors storing hyperedge names. \n")
   }
 
-  #Checking elist names are stored
+  # Checking elist names are stored
   if (is.null(names(elist))) {
     if (isValid) {
       isValid <- NULL
@@ -101,14 +101,14 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
     errorMessageMin <- paste(errorMessageMin, "\u2139 The hyperedge names are not stored within the hyperedge list. \n")
   }
 
-  #Checking nume against eweights
+  # Checking nume against eweights
   if ((nume != length(eweights)) & weighted) {
     isValid <- FALSE
     major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2139 The number of hyperedges is not equal to the number of the hyperedge weights stored. \n")
   }
 
-  #Checking nume against inc_mat if the hypergraph has real coefficients
+  # Checking nume against inc_mat if the hypergraph has real coefficients
   if (real_coef) {
     if (oriented) {
       if ((dim(inc_mat[[1]])[2] != nume) | (dim(inc_mat[[2]])[2] != nume)) {
@@ -123,31 +123,31 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
     }
   }
 
-  #Checking vertex names are characters
+  # Checking vertex names are characters
   if (!is.character(vnames)) {
     isValid <- FALSE
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 The vertex names are not stored as characters. \n")
   }
 
-  #Checking vertex names are unique
+  # Checking vertex names are unique
   if (length(vnames) != length(unique(vnames))) {
     isValid <- FALSE
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 There are two or more vertices with the same name.\n")
   }
 
-  #Checking hyperedge names are characters
+  # Checking hyperedge names are characters
   if (!is.character(enames) & !is.null(enames)) {
     isValid <- FALSE
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 The hyperedge names are not stored as characters. \n")
   }
 
-  #Checking hyperedge names are unique
+  # Checking hyperedge names are unique
   if (length(enames) != length(unique(enames))) {
     isValid <- FALSE
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 There are two or more hyperedges with the same name.\n")
   }
 
-  #Checking weighted against vweights and eweights
+  # Checking weighted against vweights and eweights
   if (weighted) {
     if (is.null(vweights)) {
       isValid <- FALSE
@@ -168,7 +168,7 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
     }
   }
 
-  #Checking oriented against elist
+  # Checking oriented against elist
   if (length(elist) > 0) {
     if (oriented) {
       if (!all(as.logical(lapply(elist, is.list)), na.rm = TRUE)) {
@@ -178,13 +178,13 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
     }
   }
 
-  #Checking oriented against directed
+  # Checking oriented against directed
   if (!oriented & directed) {
     isValid <- FALSE
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 The hypergraph is directed but not oriented.\n")
   }
 
-  #Checking oriented against inc_mat
+  # Checking oriented against inc_mat
   if (real_coef & oriented) {
     if (!is.list(inc_mat)) {
       isValid <- FALSE
@@ -192,9 +192,11 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
     }
   }
 
-  #Checking if a directed hypergraph has hyperedge end names
+  # Checking if a directed hypergraph has hyperedge end names
   if (directed) {
-    if (!all(as.logical(lapply(elist, function(x) {names(x) == c("from", "to")})), na.rm = TRUE)) {
+    if (!all(as.logical(lapply(elist, function(x) {
+      names(x) == c("from", "to")
+    })), na.rm = TRUE)) {
       if (isValid) {
         isValid <- NULL
       }
@@ -202,7 +204,7 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
     }
   }
 
-  #Checking directed against inc_mat
+  # Checking directed against inc_mat
   if (directed & real_coef) {
     if (is.null(names(inc_mat))) {
       if (isValid) {
@@ -219,13 +221,13 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
     }
   }
 
-  #Checking real_coef against inc_mat
+  # Checking real_coef against inc_mat
   if (real_coef & is.null(inc_mat)) {
     isValid <- FALSE
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 The hypergraph has real coefficients but there is no incidence matrix stored to save them.\n")
   }
 
-  #Formatting output message
+  # Formatting output message
   errorMessageMaj <- paste("  There are", major_faults, "serious problems with this hypergraph:\n", errorMessageMaj)
   errorMessageMin <- paste("There are", minor_faults, "items that need your attention with this hypergraphs:\n", errorMessageMin)
   errorMessage <- paste(errorMessageMaj, errorMessageMin, "These tests are not exhaustive, just an indication of where things might be going wrong.")

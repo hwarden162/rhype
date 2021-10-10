@@ -22,31 +22,30 @@
 #' h2 <- example_hype(oriented = TRUE)
 #' h3 <- example_hype(oriented = TRUE, directed = TRUE)
 #' h4 <- example_hype(oriented = TRUE, directed = TRUE, real_coef = TRUE)
-example_hype <- function(
-  oriented = FALSE,
-  directed = FALSE,
-  vertex_weighted = FALSE,
-  edge_weighted = FALSE,
-  real_coef = FALSE) {
+example_hype <- function(oriented = FALSE,
+                         directed = FALSE,
+                         vertex_weighted = FALSE,
+                         edge_weighted = FALSE,
+                         real_coef = FALSE) {
 
-  #Generating error if user asks for a directed but unoriented hypergraph
+  # Generating error if user asks for a directed but unoriented hypergraph
   if (!oriented & directed) {
     stop("\n \u2716 A hypergraph can't be directed but unoriented")
   }
 
-  #setting the number of vertices
+  # setting the number of vertices
   numv <- 4
 
-  #Setting the hyperedge list
+  # Setting the hyperedge list
   if (oriented) {
     elist <- list(
       list(
-        c(1,2),
-        c(3,4)
+        c(1, 2),
+        c(3, 4)
       ),
       list(
-        c(2,3,4),
-        c(1,2)
+        c(2, 3, 4),
+        c(1, 2)
       )
     )
     if (directed) {
@@ -54,36 +53,36 @@ example_hype <- function(
     }
   } else {
     elist <- list(
-      c(1,2,3),
-      c(2,3,4)
+      c(1, 2, 3),
+      c(2, 3, 4)
     )
   }
 
-  #Setting the vertex and hyperedge names
+  # Setting the vertex and hyperedge names
   vnames <- paste0("v", 1:4)
   enames <- paste0("h", 1:2)
   names(elist) <- enames
 
-  #Setting vertex and hyperedge weights
+  # Setting vertex and hyperedge weights
   if (vertex_weighted & edge_weighted) {
     vweights <- 1:4
     eweights <- 1:2
   } else if (vertex_weighted & !edge_weighted) {
     vweights <- 1:4
-    eweights <- rep(1,2)
+    eweights <- rep(1, 2)
   } else if (!vertex_weighted & edge_weighted) {
-    vweights <- rep(1,4)
+    vweights <- rep(1, 4)
     eweights <- 1:2
   } else {
     vweights <- NULL
     eweights <- NULL
   }
 
-  #Setting real coefficients
+  # Setting real coefficients
   if (real_coef) {
     if (oriented) {
-      inc_mat1 <- matrix(c(1,2,0,0,0,2,3,4), ncol = 2, nrow = 4)
-      inc_mat2 <- matrix(c(0,0,3,4,1,2,0,0), ncol = 2, nrow = 4)
+      inc_mat1 <- matrix(c(1, 2, 0, 0, 0, 2, 3, 4), ncol = 2, nrow = 4)
+      inc_mat2 <- matrix(c(0, 0, 3, 4, 1, 2, 0, 0), ncol = 2, nrow = 4)
 
       rownames(inc_mat1) <- vnames
       colnames(inc_mat1) <- enames
@@ -95,7 +94,7 @@ example_hype <- function(
         names(inc_mat) <- c("from", "to")
       }
     } else {
-      inc_mat <- matrix(c(1,2,3,0,0,2,3,4), ncol = 2, nrow = 4)
+      inc_mat <- matrix(c(1, 2, 3, 0, 0, 2, 3, 4), ncol = 2, nrow = 4)
 
       rownames(inc_mat) <- vnames
       colnames(inc_mat) <- enames
@@ -104,7 +103,7 @@ example_hype <- function(
     inc_mat <- NULL
   }
 
-  #Generating and returning hypergraph
+  # Generating and returning hypergraph
   Hypergraph$new(
     numv = numv,
     elist = elist,

@@ -33,35 +33,35 @@
 #'
 #' @examples
 degree <- function(hype, method = "vertex") {
-  #Checking the hyeprgraph is not oriented
+  # Checking the hyeprgraph is not oriented
   if (hype$get_oriented()) {
     stop("\n \u2716 Degree not yet supported for oriented hypergraphs")
   }
 
-  #Checking method and computing the corresponding degree
+  # Checking method and computing the corresponding degree
   if (method == "vertex") {
-    #Finding the adjacency matrix
+    # Finding the adjacency matrix
     adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = FALSE)
-    #Row summing the adjacency matrix
+    # Row summing the adjacency matrix
     return(
       apply(adj_mat, 1, sum)
     )
   } else if (method == "vertex_simple") {
-    #Finding the normalised adjacency matrix
+    # Finding the normalised adjacency matrix
     adj_mat <- adjacency_matrix(hype, normalise = TRUE, self_adj = FALSE)
-    #Row summing the normalised adjacency matrix
+    # Row summing the normalised adjacency matrix
     return(apply(adj_mat, 1, sum))
   } else if (method == "hyperedge") {
-    #Finding the adjacency matrix with self adjacency
+    # Finding the adjacency matrix with self adjacency
     adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = TRUE)
-    #Returning the self adjacency
+    # Returning the self adjacency
     return(diag(adj_mat))
   } else if (method == "hyperedge_simple") {
-    #Finding the incidence matrix
+    # Finding the incidence matrix
     inc_mat <- incidence_matrix(hype)
-    #Normalising the incidence matrix
+    # Normalising the incidence matrix
     inc_mat <- matrix(as.numeric(inc_mat != 0), nrow = dim(inc_mat)[1])
-    #Row summing the incidence matrix and returning this value
+    # Row summing the incidence matrix and returning this value
     return(apply(inc_mat, 1, sum))
   }
 }

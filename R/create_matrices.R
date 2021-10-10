@@ -4,9 +4,9 @@
 #'
 #' @return A vector of pseudo-inverted numbers
 pseudo_invert <- function(vec) {
-  #Cycle through the vector
+  # Cycle through the vector
   for (i in 1:length(vec)) {
-    #Invert the entry if it is non-zero
+    # Invert the entry if it is non-zero
     if (vec[i] != 0) {
       vec[i] <- 1 / vec[i]
     }
@@ -37,68 +37,68 @@ pseudo_invert <- function(vec) {
 #'
 #' @examples
 incidence_matrix <- function(hype, augment_oriented = TRUE) {
-  #If the hypergraph has real coefficients then return the saved incidence matrix
+  # If the hypergraph has real coefficients then return the saved incidence matrix
   if (hype$get_real_coef()) {
     return(hype$get_inc_mat())
   }
 
-  #Finding whether the hypergraph is oriented
+  # Finding whether the hypergraph is oriented
   if (hype$get_oriented()) {
-    #Getting basic hypergraph properties
+    # Getting basic hypergraph properties
     elist <- hype$get_elist()
     numv <- hype$get_numv()
     nume <- length(elist)
 
-    #Initialising emtry incidence matrix
+    # Initialising emtry incidence matrix
     inc_mat <- list(
       matrix(0, nrow = numv, ncol = nume),
       matrix(0, nrow = numv, ncol = nume)
     )
 
-    #Naming the matrices for directed hypergraphs
+    # Naming the matrices for directed hypergraphs
     if (hype$get_directed()) {
       names(inc_mat) <- c("from", "to")
     }
 
-    #Setting the row and column names of the matrices
+    # Setting the row and column names of the matrices
     rownames(inc_mat[[1]]) <- hype$get_vnames()
     colnames(inc_mat[[1]]) <- hype$get_enames()
     rownames(inc_mat[[2]]) <- hype$get_vnames()
     colnames(inc_mat[[2]]) <- hype$get_enames()
 
-    #Iterating through the matrix columns and setting the relevant entries to 1
+    # Iterating through the matrix columns and setting the relevant entries to 1
     for (i in 1:nume) {
       inc_mat[[1]][elist[[i]][[1]], i] <- 1
       inc_mat[[2]][elist[[i]][[2]], i] <- 1
     }
 
-    #Augmenting oriented but undirected hypergraphs if necessary
+    # Augmenting oriented but undirected hypergraphs if necessary
     if (hype$get_oriented() & !hype$get_directed() & augment_oriented) {
       temp <- inc_mat[[1]]
       inc_mat[[1]] <- cbind(inc_mat[[1]], inc_mat[[2]])
       inc_mat[[2]] <- cbind(inc_mat[[2]], temp)
     }
 
-    #Returning the incidence matrix
+    # Returning the incidence matrix
     return(inc_mat)
   } else {
-    #Getting basic hypergraph properties
+    # Getting basic hypergraph properties
     elist <- hype$get_elist()
     numv <- hype$get_numv()
     nume <- length(elist)
 
-    #Generating an empty incidence matrix
+    # Generating an empty incidence matrix
     inc_mat <- matrix(0, nrow = numv, ncol = nume)
-    #Setting row and column names of the incidence matrix
+    # Setting row and column names of the incidence matrix
     rownames(inc_mat) <- hype$get_vnames()
     colnames(inc_mat) <- hype$get_enames()
 
-    #Iterating through the incidene matrix columns setting relevant entries to 1
+    # Iterating through the incidene matrix columns setting relevant entries to 1
     for (i in 1:nume) {
       inc_mat[elist[[i]], i] <- 1
     }
 
-    #Return the incidence matrix
+    # Return the incidence matrix
     return(inc_mat)
   }
 }
@@ -125,38 +125,38 @@ incidence_matrix <- function(hype, augment_oriented = TRUE) {
 #'
 #' @examples
 adjacency_matrix <- function(hype, normalise = TRUE, self_adj = TRUE) {
-  #Finding the incidence matrix
+  # Finding the incidence matrix
   inc_mat <- incidence_matrix(hype)
 
-  #Finding hyperedge weights
+  # Finding hyperedge weights
   if (hype$get_weighted()) {
     eweights <- hype$get_eweights()
   } else {
     eweights <- rep(1, length(hype$get_elist()))
   }
 
-  #Finding the adjacency matrix using incidence matrices
+  # Finding the adjacency matrix using incidence matrices
   if (hype$get_oriented()) {
     adj_mat <- inc_mat[[1]] %*% (eweights * t(inc_mat[[2]]))
   } else {
     adj_mat <- inc_mat %*% (eweights * t(inc_mat))
   }
 
-  #Setting the matrix entries to 0 and 1 if specified
+  # Setting the matrix entries to 0 and 1 if specified
   if (normalise) {
     adj_mat <- matrix(as.numeric(adj_mat != 0), nrow = dim(adj_mat)[1])
   }
 
-  #Removing the leading diagonal if specified
+  # Removing the leading diagonal if specified
   if (!self_adj) {
     diag(adj_mat) <- 0
   }
 
-  #Setting row and column names
+  # Setting row and column names
   rownames(adj_mat) <- hype$get_vnames()
   colnames(adj_mat) <- hype$get_vnames()
 
-  #Returning the adjacency matrix
+  # Returning the adjacency matrix
   return(adj_mat)
 }
 
@@ -169,19 +169,19 @@ adjacency_matrix <- function(hype, normalise = TRUE, self_adj = TRUE) {
 #'
 #' @examples
 laplacian_matrix <- function(hype) {
-  #Checking the hypergraph is not oriented
+  # Checking the hypergraph is not oriented
   if (hype$get_oriented()) {
     stop("\n \u2716 This function is not yet available for oriented hypergraphs")
   }
 
-  #Finding the adjacency matrix
+  # Finding the adjacency matrix
   adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = FALSE)
-  #Finding the row sum degree
+  # Finding the row sum degree
   deg <- apply(adj_mat, 1, sum)
-  #Transforming the adjacency matrix into the laplacian matrix
+  # Transforming the adjacency matrix into the laplacian matrix
   lap_mat <- -1 * adj_mat
   diag(lap_mat) <- deg
-  #Returning the laplacian matrix
+  # Returning the laplacian matrix
   return(lap_mat)
 }
 
@@ -197,15 +197,15 @@ laplacian_matrix <- function(hype) {
 #'
 #' @examples
 vert_norm_lap_mat <- function(hype) {
-  #Checing the hypergraph is not oriented
+  # Checing the hypergraph is not oriented
   if (hype$get_oriented()) {
     stop("\n \u2716 This function is not yet available for oriented hypergraphs")
   }
 
-  #Finding the laplacian matrix via the adjacency matrix
+  # Finding the laplacian matrix via the adjacency matrix
   lap_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = TRUE)
   lap_mat <- pseudo_invert(diag(lap_mat)) * lap_mat
-  #Returning the laplacian matrix
+  # Returning the laplacian matrix
   return(lap_mat)
 }
 
@@ -221,14 +221,14 @@ vert_norm_lap_mat <- function(hype) {
 #'
 #' @examples
 hype_norm_lap_mat <- function(hype) {
-  #Checking the hypergraph is not oriented
+  # Checking the hypergraph is not oriented
   if (hype$get_oriented()) {
     stop("\n \u2716 This function is not yet available for oriented hypergraphs")
   }
 
-  #Calculating the laplacian matrix
+  # Calculating the laplacian matrix
   inc_mat <- incidence_matrix(hype)
   lap_mat <- t(inc_mat) %*% (pseudo_invert(degree(hype, method = "hyperedge")) * inc_mat)
-  #Returning the laplacian matrix
+  # Returning the laplacian matrix
   return(lap_mat)
 }
