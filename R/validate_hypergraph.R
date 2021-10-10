@@ -113,11 +113,13 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
     if (oriented) {
       if ((dim(inc_mat[[1]])[2] != nume) | (dim(inc_mat[[2]])[2] != nume)) {
         isValid <- FALSE
+        major_faults <- major_faults + 1
         errorMessageMaj <- paste(errorMessageMaj, "\u2716 The number of hyperedges is not equal to the number of columns in the stored incidence matrix. \n")
       }
     } else {
       if (dim(inc_mat)[2] != nume) {
         isValid <- FALSE
+        major_faults <- major_faults + 1
         errorMessageMaj <- paste(errorMessageMaj, "\u2716 The number of hyperedges is not equal to the number of columns in the stored incidence matrix. \n")
       }
     }
@@ -126,24 +128,28 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
   # Checking vertex names are characters
   if (!is.character(vnames)) {
     isValid <- FALSE
+    major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 The vertex names are not stored as characters. \n")
   }
 
   # Checking vertex names are unique
   if (length(vnames) != length(unique(vnames))) {
     isValid <- FALSE
+    major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 There are two or more vertices with the same name.\n")
   }
 
   # Checking hyperedge names are characters
   if (!is.character(enames) & !is.null(enames)) {
     isValid <- FALSE
+    major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 The hyperedge names are not stored as characters. \n")
   }
 
   # Checking hyperedge names are unique
   if (length(enames) != length(unique(enames))) {
     isValid <- FALSE
+    major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 There are two or more hyperedges with the same name.\n")
   }
 
@@ -151,19 +157,23 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
   if (weighted) {
     if (is.null(vweights)) {
       isValid <- FALSE
+      major_faults <- major_faults + 1
       errorMessageMaj <- paste(errorMessageMaj, "\u2716 The hyperedge is weighted but the vertex weights are missing. \n")
     }
     if (is.null(eweights)) {
       isValid <- FALSE
+      major_faults <- major_faults + 1
       errorMessageMaj <- paste(errorMessageMaj, "\u2716 The hyperedge is weighted but the hyperedge weights are missing. \n")
     }
   } else {
     if (!is.null(vweights)) {
       isValid <- FALSE
+      major_faults <- major_faults + 1
       errorMessageMaj <- paste(errorMessageMaj, "\u2716 The hyperedge is not weighted but the vertex weights are not NULL \n")
     }
     if (!is.null(eweights)) {
       isValid <- FALSE
+      major_faults <- major_faults + 1
       errorMessageMaj <- paste(errorMessageMaj, "\u2716 The hyperedge is not weighted but the hyperedge weights are not NULL \n")
     }
   }
@@ -173,6 +183,7 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
     if (oriented) {
       if (!all(as.logical(lapply(elist, is.list)), na.rm = TRUE)) {
         isValid <- FALSE
+        major_faults <- major_faults + 1
         errorMessageMaj <- paste(errorMessageMaj, "\u2716 The hypergraph is oriented but not all the hyperedges are in oriented format.\n")
       }
     }
@@ -181,6 +192,7 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
   # Checking oriented against directed
   if (!oriented & directed) {
     isValid <- FALSE
+    major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 The hypergraph is directed but not oriented.\n")
   }
 
@@ -188,6 +200,7 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
   if (real_coef & oriented) {
     if (!is.list(inc_mat)) {
       isValid <- FALSE
+      major_faults <- major_faults + 1
       errorMessageMaj <- paste(errorMessageMaj, "\u2716 The hypergraph is oriented but the stored incidence matrix is not in oriented format.")
     }
   }
@@ -200,6 +213,7 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
       if (isValid) {
         isValid <- NULL
       }
+      minor_faults <- minor_faults + 1
       errorMessageMin <- paste(errorMessageMin, "\u2139 The hypergraph is directed but the names in the hyperedges are missing \"from\" and \"to\".\n")
     }
   }
@@ -210,12 +224,14 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
       if (isValid) {
         isValid <- NULL
       }
+      minor_faults <- minor_faults + 1
       errorMessageMin <- paste(errorMessageMin, "\2139 The hypergraph is directed but the saved incidence matrix does not have \"from\" and \"to\" as names.\n")
     } else {
       if (all(names(inc_mat) != c("from", "to"))) {
         if (isValid) {
           isValid <- NULL
         }
+        minor_faults <- minor_faults + 1
         errorMessageMin <- paste(errorMessageMin, "\2139 The hypergraph is directed but the saved incidence matrix does not have \"from\" and \"to\" as names.\n")
       }
     }
@@ -224,6 +240,7 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
   # Checking real_coef against inc_mat
   if (real_coef & is.null(inc_mat)) {
     isValid <- FALSE
+    major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 The hypergraph has real coefficients but there is no incidence matrix stored to save them.\n")
   }
 
