@@ -118,3 +118,91 @@ Hypergraph <- R6::R6Class(
     inc_mat = NULL
   )
 )
+
+hype_info <- function(
+  hype,
+  numv = TRUE,
+  elist = TRUE,
+  vnames = TRUE,
+  vweights = TRUE,
+  enames = TRUE,
+  eweights = TRUE,
+  weighted = TRUE,
+  oriented = TRUE,
+  directed = TRUE,
+  real_coef = TRUE,
+  inc_mat = TRUE
+) {
+  cat("====================HYPERGRAPH INFORMATION====================\n\n")
+
+  if (numv | vnames) {
+    cat("--------------------VERTEX INFORMATION--------------------\n\n")
+    if (numv) {
+      cat("This hypergraph has ", hype$get_numv(), " vertices\n\n")
+    }
+    if (vnames) {
+      cat("These vertices are called:\n", paste0(hype$get_vnames(), collapse = ", "), "\n\n")
+    }
+  }
+
+  if (elist | enames) {
+    cat("--------------------HYPEREDGE INFORMATION--------------------\n\n")
+    if (enames) {
+      cat("The hyperedges are called:\n", paste0(hype$get_enames(), collapse = ", "), "\n\n")
+    }
+    if (elist) {
+      cat("The hyperedges have the structure:\n")
+      print(hype$get_elist())
+    }
+  }
+
+  if (weighted) {
+    cat("---------------WEIGHTING INFORMATION--------------------\n\n")
+    if (hype$get_weighted()) {
+      cat("This hypergraph is weighted\n\n")
+      if (eweights) {
+        cat("The hyperedges have weights:\n")
+        print(hype$get_eweights())
+        cat("\n")
+      }
+      if (vweights) {
+        cat("The vertices have weights:\n")
+        print(hype$get_vweights())
+        cat("\n")
+      }
+    } else {
+      cat("This hypergraph is not weighted\n\n")
+    }
+  }
+
+  if (oriented | directed) {
+    cat("--------------------Orientation Information--------------------\n\n")
+    if (oriented) {
+      if (hype$get_oriented()) {
+        cat("This hypergraph is oriented\n\n")
+      } else {
+        cat("This hypergraph is not oriented\n\n")
+      }
+
+      if (hype$get_directed()) {
+        cat("This hypergraph is directed\n\n")
+      } else {
+        cat("This hypergraph is not directed\n\n")
+      }
+    }
+  }
+
+  if (real_coef | inc_mat) {
+    cat("--------------------REAL COEFFICIENTS INFORMATION--------------------\n\n")
+    if (hype$get_real_coef()) {
+      cat("This hypergraph has real coefficients associating vertices to hyperedges\n\n")
+      if (inc_mat) {
+        cat("The incidence matrix associating vertices to hyperedges is given by:\n")
+        print(hype$get_inc_mat())
+      }
+    } else {
+      cat("This hypergraph does not have real coefficients associating vertices to hyperedges\n\n")
+      cat("There is no incidence matrix associating vertices to hyperedges with non-binary coefficients\n\n")
+    }
+  }
+}

@@ -1,5 +1,4 @@
 test_that("validate hypergraph works on basic hypergraph", {
-
   # Create test basic hypergraph --------------------------------------------
   hype <- example_hype()
   expect_true(validate_hypergraph(hype, verbose = FALSE, return = TRUE))
@@ -29,6 +28,23 @@ test_that("validate hypergraph works on basic hypergraph", {
   expect_false(validate_hypergraph(hype, verbose = FALSE, return = TRUE))
   hype$set_vnames(1:5)
   expect_false(validate_hypergraph(hype, verbose = FALSE, return = TRUE))
+  hype <- example_hype()
 
+  # Test enames -------------------------------------------------------------
+  hype$set_enames(NULL)
+  expect_false(validate_hypergraph(hype, verbose = FALSE, return = TRUE))
+  hype$set_enames("hello")
+  expect_false(validate_hypergraph(hype, verbose = FALSE, return = TRUE))
+  hype$set_enames(paste("h",1:10))
+  expect_false(validate_hypergraph(hype, verbose = FALSE, return = TRUE))
+  hype$set_enames(1:2)
+  expect_false(validate_hypergraph(hype, verbose = FALSE, return = TRUE))
+  hype <- example_hype()
+})
+
+test_that("validate hypergraph works on oriented hypergraphs", {
+  # Create test oriented hypergraph -----------------------------------------
+  hype <- example_hype(oriented = TRUE)
+  expect_true(validate_hypergraph(hype, verbose = FALSE, return = TRUE))
 
 })
