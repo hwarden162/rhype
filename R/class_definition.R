@@ -234,7 +234,7 @@ hype_info <- function(
   }
 
   #Check whether information on orientation is to be printed
-  if (oriented | directed) {
+  if (oriented) {
     cat("--------------------Orientation Information--------------------\n\n")
 
     #Print whether the hypergraph is oriented
@@ -253,7 +253,7 @@ hype_info <- function(
   }
 
   #Check whether information on real coefficients should be printed
-  if (real_coef | inc_mat) {
+  if (real_coef) {
     cat("--------------------REAL COEFFICIENTS INFORMATION--------------------\n\n")
     #Print whether the hypergraph has real coefficients
     if (hype$get_real_coef()) {
