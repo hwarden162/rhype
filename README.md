@@ -1,4 +1,30 @@
 
+-   [HYPR IS CURRENTLY BEING REWRITTEN - MORE CODE CAN BE FOUND IN THE
+    HYPR-OLD
+    REPO](#hypr-is-currently-being-rewritten---more-code-can-be-found-in-the-hypr-old-repo)
+-   [hypR](#hypr)
+    -   [Installation](#installation)
+    -   [Getting Started](#getting-started)
+        -   [Weighting](#weighting)
+        -   [Orientation](#orientation)
+        -   [Real Coefficients](#real-coefficients)
+        -   [Combining Extra Features](#combining-extra-features)
+    -   [Creating Hypergraphs](#creating-hypergraphs)
+    -   [Hypergraph Objects](#hypergraph-objects)
+        -   [Number of Vertices - `numv`](#number-of-vertices---numv)
+        -   [Hyperedge List - `elist`](#hyperedge-list---elist)
+        -   [Vertex Names - `vnames`](#vertex-names---vnames)
+        -   [Vertex Weights - `vweights`](#vertex-weights---vweights)
+        -   [Hyperedge Names - `enames`](#hyperedge-names---enames)
+        -   [Hyperedge Weights -
+            `eweights`](#hyperedge-weights---eweights)
+        -   [Weighted - `weighted`](#weighted---weighted)
+        -   [Oriented - `oriented`](#oriented---oriented)
+        -   [Directed - `directed`](#directed---directed)
+        -   [Real Coefficients -
+            `real_coef`](#real-coefficients---real_coef)
+        -   [Incidence Matrix - `inc_mat`](#incidence-matrix---inc_mat)
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # HYPR IS CURRENTLY BEING REWRITTEN - MORE CODE CAN BE FOUND IN THE HYPR-OLD REPO
@@ -436,6 +462,13 @@ not yet been finished.
 If a function does not work for a particular use that you would like,
 please raise it on the [GitHub Repo](https://github.com/hwarden162/hypR)
 to move that job higher up the list of features to add.
+
+## Creating Hypergraphs
+
+There are currently two methods for creating hypergraphs in hypR, using
+a hyperedge list or using an incidence matrix.
+
+A hyperedge list is a list where each entry represents a hypergraph
 
 ## Hypergraph Objects
 

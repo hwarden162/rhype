@@ -1,5 +1,7 @@
 ---
-output: github_document
+output: 
+  github_document:
+    toc: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -123,6 +125,16 @@ All of these feature will interact together, with orientations restricting the m
 All efforts have been made to make hypR as flexible as possible. However, although the modelling is extremely flexible not all functions are able to take all forms of hypergaphs, this will be stated in its documentation or as an error message if an execution is attempted. The reason for this is either because the computation is complex and has not been finished yet, or because the maths governing this calculation has not yet been finished. 
 
 If a function does not work for a particular use that you would like, please raise it on the [GitHub Repo](https://github.com/hwarden162/hypR) to move that job higher up the list of features to add.
+
+```{r, echo=FALSE}
+rm(list = ls())
+```
+
+## Creating Hypergraphs
+
+There are currently two methods for creating hypergraphs in hypR, using a hyperedge list or using an incidence matrix.
+
+A hyperedge list is a list where each entry represents a hypergraph
 
 ## Hypergraph Objects
 
