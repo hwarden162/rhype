@@ -1,4 +1,5 @@
 ---
+title: "hypR"
 output: 
   github_document:
     toc: true
@@ -17,16 +18,16 @@ knitr::opts_chunk$set(
 
 # HYPR IS CURRENTLY BEING REWRITTEN - MORE CODE CAN BE FOUND IN THE HYPR-OLD REPO
 
-# hypR
-
 <!-- badges: start -->
 <!-- badges: end -->
+
+# Introduction
 
 The underlying philosophy of hypR is to pass data into a function that will transform it into a hypergraph object that can then be passed into other functions to perform manipulations and calculations. This means that once the hypergraph object has been created, no further processing of the data is needed to carry out any operation. This hopefully allows for users to easily implement hypergraph based techniques into their workflows with minimal technical skill required.
 
 However, for those users with a greater technical skillset, they are able to work directly with the R6 hypergraph object allowing for operations and manipulations that may be prohibited by the other functions. Such users are directed to the Hypergraph Objects section for a more in depth explanation.
 
-## Installation
+# Installation
 
 The development version of hypR is available from [GitHub](https://github.com) with:
 
@@ -35,7 +36,7 @@ The development version of hypR is available from [GitHub](https://github.com) w
 devtools::install_github("hwarden162/hypR")
 ```
 
-## Getting Started
+# Getting Started
 
 The first thing to do is to create a hypergraph object. Hypergraph objects can be created from your own data, but the `example_hype()` function can be used to create many different types of hypergraphs that are useful for exploring hypR.
 
@@ -62,7 +63,7 @@ However, if too many of these settings are being set to false it is recommended 
 
 `hype1` is an example of a very basic hypergraph. `hypR` allows for three more ways to augment a hypergraph: weighting, orientation and real coefficients.
 
-### Weighting
+## Weighting
 
 Weights can be applied to both vertices and hyperedges. `hype2` is an example of a weighted hypergraph
 
@@ -74,7 +75,7 @@ hype_info(hype2, oriented = FALSE, real_coef = FALSE)
 
 Hyperedge weightings will change the way information is flows through the hypergraph and so will have an effect on almost every calculation done in `hypR`. Vertex weightings are currently not used in any `hypR` functions except as a store for hyperedge weightings in dual hypergraphs. However, **this is likely to change**, all efforts will be made such that changes should not affect previously written code but this may not be possible/feasible.
 
-### Orientation
+## Orientation
 
 Orientations can be applied to hyperedges. This creates two groups within the hyperedge such that information can only travel across a hyperedge from a vertex in one group to a vertex in the other group. `hype3` is an example of an oriented hypergraph
 
@@ -94,7 +95,7 @@ Now looking at the hyperedge information, it can be seen in the naming of the gr
 
 A very important rule to remember is that **all directed hypergraphs must be oriented** but not all oriented hypergraphs are directed.
 
-### Real Coefficients
+## Real Coefficients
 
 Real coefficients can be seen as an extension of weightings. A real coefficient can be used to connect a vertex to a hyperedge with a certain weight. This is useful as sometimes you may want two vertices to both be a member of a hyperedge, but for one of those vertices to be twice as important within that hyperedge as the other. Therefore, the vertex can be connected specifically to that hyperedge with a coefficient that is twice as big as the other's.
 
@@ -105,7 +106,9 @@ hype_info(hype5, weighted = FALSE, oriented = FALSE)
 
 At the bottom of the printout for `hype5` an incidence matrix can be seen, this can essentially be viewed as a table that shows how strongly connected each vertex (row) is connected to each hyperedge (column).
 
-### Combining Extra Features
+A vertex is considered to be a member of a hyperedge if the respective entry in the matrix is not 0. However, there is a soft assumption that these real coefficients are non-negative. Although it is possible to put negative values as real coefficients, and there are many occasions where one may want to, this should be done **with great care**. Negative coefficients can cause many problems, expecially when calculating hypergraph matrices and hyperpaths between vertices. This is because when calculating the adjacency coefficient between two vertices, negative numbers means this can sum to 0. This would mean that the vertices will be considered not adjacent (even though they are). hypR does not check for this so manual checking is necessary.
+
+## Combining Extra Features
 
 Hypergraph weighting, orientation and real coefficients can all be combined together the model very complicated systems
 
@@ -130,21 +133,141 @@ If a function does not work for a particular use that you would like, please rai
 rm(list = ls())
 ```
 
-## Creating Hypergraphs
+# Creating Hypergraphs
 
 There are currently two methods for creating hypergraphs in hypR, using a hyperedge list or using an incidence matrix.
 
-A hyperedge list is a list where each entry represents a hypergraph
+## Hypergraphs From Hyperedge Lists
 
-## Hypergraph Objects
+A hyperedge list is a list where each entry represents a hyperedge. For an unoriented hyperedge, this can just be represented as a vector of the vertices in the hyperedge. For an oriented hyperedge, this can be represented as a list of two vectors, with each vector containing the vertices in one end of the hyperedge. For an oriented hyperedge, the first vector represents all vertices in the tail of a hyperedge and the second all vertices in the head.
+
+A vertex can be any variable that can be coerced into a string and then factored. It is recommended that vertices be represented as a string in the first place or an integer. Here is an example hyperedge list
+
+```{r}
+l1 <- list(
+  h1 = c("a","b","c"),
+  h2 = c("c","d","e"),
+  h3 = c("a", "e")
+)
+```
+
+This can be used to create a hypergraph with three hyperedges (named after the element names in the list).
+
+```{r}
+hype1 <- hype_from_edge_list(l1)
+hype_info(hype1, weighted = FALSE, oriented = FALSE, real_coef = FALSE)
+```
+
+Here is an example of an oriented list
+
+```{r}
+l2 <- list(
+  h1 = list(
+    c(1,2),
+    c(2,3)
+  ),
+  h2 = list(
+    c(2,3,4),
+    c(5,6)
+  ),
+  h3 = list(
+    6,
+    1
+  )
+)
+```
+
+This can be used to create an oriented hypergraph
+
+```{r}
+hype2 <- hype_from_edge_list(l2)
+hype_info(hype2, weighted = FALSE, real_coef = FALSE)
+```
+
+It can also be used to create a directed hypergraph, with the first element of each hyperedge representing the tail (where information can travel from) and the second representing the head (where information can travel to)
+
+```{r}
+hype3 <- hype_from_edge_list(l2, directed = TRUE)
+hype_info(hype3, weighted = FALSE, real_coef = FALSE)
+```
+
+```{r}
+rm(list = ls())
+```
+
+## Hypergraphs From Incidence Matrices
+
+An incidence matrix can be seen as a table where each row represents a vertex and each column represents a hyperedge. Each entry is a 1 if the vertex is a member of the hyperedge and a 0 if it is not. An example incidence matrix is given below
+
+```{r}
+i1 <- matrix(
+  c(1,1,1,0,0,0,0,1,1,1,0,1,0,1,0),
+  nrow = 5,
+  ncol = 3,
+  dimnames = list(
+    paste0("v", 1:5),
+    paste0("h", 1:3)
+  )
+)
+i1
+```
+
+This can be made into a hypergraph using the `hype_from_inc_mat()` function
+
+```{r}
+hype1 <- hype_from_inc_mat(i1)
+hype_info(hype1, weighted = FALSE, oriented = FALSE, real_coef = FALSE)
+```
+
+hypR represents oriented hypergraphs using a list of two incidence matrices. The first inidence matrix represents incidence to one end of the oriented hyperedge and the other represents incidence to the other end (it doesn't matter which way round these are). An example is given below
+
+```{r}
+i2 <- list(
+  matrix(
+    c(1,1,0,0,1,0,0,1,0,1,1,0),
+    nrow = 4,
+    ncol = 3,
+    dimnames = list(
+      paste0("v", 1:4),
+      paste0("h", 1:3)
+    )
+  ),
+  matrix(
+    c(0,0,1,1,1,1,0,0,1,0,1,0),
+    nrow = 4,
+    ncol = 3,
+    dimnames = list(
+      paste0("v", 1:4),
+      paste0("h", 1:3)
+    )
+  )
+)
+i2
+```
+
+This can be turned into an oriented hypergraph by passing it to the same function
+
+```{r}
+hype2 <- hype_from_inc_mat(i2)
+hype_info(hype2, weighted = FALSE, real_coef = FALSE)
+```
+
+It can also be turned into a directed hypergraph using the directing option
+
+```{r}
+hype3 <- hype_from_inc_mat(i2, directed = TRUE)
+hype_info(hype3, weighted = FALSE, real_coef = FALSE)
+```
+
+# Hypergraph Objects
 
 A hypergraph object is essentially a collection of eleven properties. Together, these properties fully describe many different forms of hypergraphs. These properties are listed and explained more in depth below:
 
-### Number of Vertices - `numv`
+## Number of Vertices - `numv`
 
 This is simply a postive integer value representing the number of vertices the hypergraph has.
 
-### Hyperedge List - `elist`
+## Hyperedge List - `elist`
 
 This property is a list where every entry represents a hyperedge.
 
@@ -154,39 +277,39 @@ For an oriented hypergraph, each hyperedge is itself a list of two vectors. Each
 
 For a directed hypergraph, each hyperedge is also a list of two vectors. In the directed case, the first vector represents the vertices contained in the tail of the hyperedge and the second the vertices contained in the head. These two entries are also named `from` and `to`.
 
-### Vertex Names  - `vnames`
+## Vertex Names  - `vnames`
 
 This a vector of strings representing the name of each vertex. On a technical point, this is used as a reference for levels when factoring multiple groups of vertices.
 
-### Vertex Weights - `vweights`
+## Vertex Weights - `vweights`
 
 This is a vector of weights associated with each vertex. This has little practical use in this hypR implementation except to keep track of hyperedge weights when transforming a hypergraph into its dual.
 
-### Hyperedge Names  - `enames`
+## Hyperedge Names  - `enames`
 
 This a vector of strings representing the name of each hyperedge On a technical point, this is used as a reference for levels when factoring multiple groups of hyperedges.
 
-### Hyperedge Weights - `eweights`
+## Hyperedge Weights - `eweights`
 
 This is a vector of weights associated with each hyperedge.
 
-### Weighted - `weighted`
+## Weighted - `weighted`
 
 This is a logical value indicating whether there are weights associated with the vertices or hyperedges.
 
-### Oriented - `oriented`
+## Oriented - `oriented`
 
 This is a logical value indicating whether the hyperedges are oriented.
 
-### Directed - `directed`
+## Directed - `directed`
 
 This is a logical value indicating whether the hyperedges are directed.
 
-### Real Coefficients - `real_coef`
+## Real Coefficients - `real_coef`
 
 This is a logical vector indicating whether there are real coefficients associating the vertices to the hyperedges.
 
-### Incidence Matrix - `inc_mat`
+## Incidence Matrix - `inc_mat`
 
 This is only used for hypergraphs with real coefficients.
 
