@@ -68,12 +68,18 @@ example_hype <- function(oriented = FALSE,
   if (vertex_weighted & edge_weighted) {
     vweights <- 1:4
     eweights <- 1:2
+    names(vweights) <- vnames
+    names(eweights) <- enames
   } else if (vertex_weighted & !edge_weighted) {
     vweights <- 1:4
     eweights <- rep(1, 2)
+    names(vweights) <- vnames
+    names(eweights) <- enames
   } else if (!vertex_weighted & edge_weighted) {
     vweights <- rep(1, 4)
     eweights <- 1:2
+    names(vweights) <- vnames
+    names(eweights) <- enames
   } else {
     vweights <- NULL
     eweights <- NULL
