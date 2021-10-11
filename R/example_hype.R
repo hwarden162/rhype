@@ -49,7 +49,8 @@ example_hype <- function(oriented = FALSE,
       )
     )
     if (directed) {
-      names(elist) <- c("from", "to")
+      names(elist[[1]]) <- c("from", "to")
+      names(elist[[2]]) <- c("from", "to")
     }
   } else {
     elist <- list(
