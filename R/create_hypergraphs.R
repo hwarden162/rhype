@@ -124,13 +124,15 @@ hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
     }
 
     # Finding tail elements of hyperedges
-    tail_list <- apply(inc_mat[[1]], 2, function(x) {
-      which(x != 0)
-    })
+    tail_list <- list()
+    for (i in 1:dim(inc_mat[[1]])[2]) {
+      tail_list[[i]] <- vnames[which(inc_mat[[1]][,i] != 0)]
+    }
     # Finding head elements of hyperedges
-    head_list <- apply(inc_mat[[2]], 2, function(x) {
-      which(x != 0)
-    })
+    head_list <- list()
+    for (i in 1:dim(inc_mat[[2]])[2]) {
+      head_list[[i]] <- vnames[which(inc_mat[[2]][,i] != 0)]
+    }
 
     # Generating hyperedge list
     elist <- list()
@@ -144,6 +146,7 @@ hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
     # Finding hyperedge names
     if (!is.null(colnames(inc_mat[[1]]))) {
       enames <- as.character(colnames(inc_mat[[1]]))
+      names(elist) <- enames
     } else {
       enames <- NULL
     }
@@ -191,6 +194,7 @@ hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
     # Finding hyperedge names
     if (!is.null(colnames(inc_mat))) {
       enames <- as.character(colnames(inc_mat))
+      names(elist) <- enames
     } else {
       enames <- NULL
     }
