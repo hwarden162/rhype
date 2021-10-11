@@ -158,6 +158,14 @@ Hypergraph <- R6::R6Class(
 #' @export
 #'
 #' @examples
+#' hype1 <- example_hype()
+#' hype_info(hype1)
+#'
+#' hype2 <- example_hype(vertex_weighted = TRUE, edge_weighted = TRUE)
+#' hype_info(hype2)
+#'
+#' hype3 <- example_hype(oriented = TRUE, directed = TRUE, real_coef = TRUE)
+#' hype_info(hype3)
 hype_info <- function(
   hype,
   numv = TRUE,

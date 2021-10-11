@@ -67,3 +67,13 @@ included in final scripts. If a user wants to include this in their final
 script it is instead heavily encouraged that they use other hypR functions to
 generate their own bespoke messages.
 }
+\examples{
+hype1 <- example_hype()
+hype_info(hype1)
+
+hype2 <- example_hype(vertex_weighted = TRUE, edge_weighted = TRUE)
+hype_info(hype2)
+
+hype3 <- example_hype(oriented = TRUE, directed = TRUE, real_coef = TRUE)
+hype_info(hype3)
+}
