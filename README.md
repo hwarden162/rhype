@@ -367,6 +367,18 @@ At the bottom of the printout for `hype5` an incidence matrix can be
 seen, this can essentially be viewed as a table that shows how strongly
 connected each vertex (row) is connected to each hyperedge (column).
 
+A vertex is considered to be a member of a hyperedge if the respective
+entry in the matrix is not 0. However, there is a soft assumption that
+these real coefficients are non-negative. Although it is possible to put
+negative values as real coefficients, and there are many occasions where
+one may want to, this should be done **with great care**. Negative
+coefficients can cause many problems, expecially when calculating
+hypergraph matrices and hyperpaths between vertices. This is because
+when calculating the adjacency coefficient between two vertices,
+negative numbers means this can sum to 0. This would mean that the
+vertices will be considered not adjacent (even though they are). hypR
+does not check for this so manual checking is necessary.
+
 ## Combining Extra Features
 
 Hypergraph weighting, orientation and real coefficients can all be
@@ -531,16 +543,16 @@ Here is an example of an oriented list
 ``` r
 l2 <- list(
   h1 = list(
-    c(1,2),
-    c(2,3)
+    c("a","b"),
+    c("b","c")
   ),
   h2 = list(
-    c(2,3,4),
-    c(5,6)
+    c("b","c","d"),
+    c("e","f")
   ),
   h3 = list(
-    6,
-    1
+    "f",
+    "a"
   )
 )
 ```
@@ -557,7 +569,7 @@ hype_info(hype2, weighted = FALSE, real_coef = FALSE)
 #> This hypergraph has  6  vertices
 #> 
 #> These vertices are called:
-#>  1, 2, 3, 4, 5, 6 
+#>  a, b, c, d, e, f 
 #> 
 #> --------------------HYPEREDGE INFORMATION--------------------
 #> 
@@ -567,26 +579,26 @@ hype_info(hype2, weighted = FALSE, real_coef = FALSE)
 #> The hyperedges have the structure:
 #> $h1
 #> $h1[[1]]
-#> [1] "1" "2"
+#> [1] "a" "b"
 #> 
 #> $h1[[2]]
-#> [1] "2" "3"
+#> [1] "b" "c"
 #> 
 #> 
 #> $h2
 #> $h2[[1]]
-#> [1] "2" "3" "4"
+#> [1] "b" "c" "d"
 #> 
 #> $h2[[2]]
-#> [1] "5" "6"
+#> [1] "e" "f"
 #> 
 #> 
 #> $h3
 #> $h3[[1]]
-#> [1] "6"
+#> [1] "f"
 #> 
 #> $h3[[2]]
-#> [1] "1"
+#> [1] "a"
 #> 
 #> 
 #> --------------------Orientation Information--------------------
@@ -611,7 +623,7 @@ hype_info(hype3, weighted = FALSE, real_coef = FALSE)
 #> This hypergraph has  6  vertices
 #> 
 #> These vertices are called:
-#>  1, 2, 3, 4, 5, 6 
+#>  a, b, c, d, e, f 
 #> 
 #> --------------------HYPEREDGE INFORMATION--------------------
 #> 
@@ -621,26 +633,26 @@ hype_info(hype3, weighted = FALSE, real_coef = FALSE)
 #> The hyperedges have the structure:
 #> $h1
 #> $h1$from
-#> [1] "1" "2"
+#> [1] "a" "b"
 #> 
 #> $h1$to
-#> [1] "2" "3"
+#> [1] "b" "c"
 #> 
 #> 
 #> $h2
 #> $h2$from
-#> [1] "2" "3" "4"
+#> [1] "b" "c" "d"
 #> 
 #> $h2$to
-#> [1] "5" "6"
+#> [1] "e" "f"
 #> 
 #> 
 #> $h3
 #> $h3$from
-#> [1] "6"
+#> [1] "f"
 #> 
 #> $h3$to
-#> [1] "1"
+#> [1] "a"
 #> 
 #> 
 #> --------------------Orientation Information--------------------
@@ -651,6 +663,259 @@ hype_info(hype3, weighted = FALSE, real_coef = FALSE)
 ```
 
 ## Hypergraphs From Incidence Matrices
+
+An incidence matrix can be seen as a table where each row represents a
+vertex and each column represents a hyperedge. Each entry is a 1 if the
+vertex is a member of the hyperedge and a 0 if it is not. An example
+incidence matrix is given below
+
+``` r
+i1 <- matrix(
+  c(1,1,1,0,0,0,0,1,1,1,0,1,0,1,0),
+  nrow = 5,
+  ncol = 3,
+  dimnames = list(
+    paste0("v", 1:5),
+    paste0("h", 1:3)
+  )
+)
+i1
+#>    h1 h2 h3
+#> v1  1  0  0
+#> v2  1  0  1
+#> v3  1  1  0
+#> v4  0  1  1
+#> v5  0  1  0
+```
+
+This can be made into a hypergraph using the `hype_from_inc_mat()`
+function
+
+``` r
+hype1 <- hype_from_inc_mat(i1)
+hype_info(hype1, weighted = FALSE, oriented = FALSE, real_coef = FALSE)
+#> ====================HYPERGRAPH INFORMATION====================
+#> 
+#> --------------------VERTEX INFORMATION--------------------
+#> 
+#> This hypergraph has  5  vertices
+#> 
+#> These vertices are called:
+#>  v1, v2, v3, v4, v5 
+#> 
+#> --------------------HYPEREDGE INFORMATION--------------------
+#> 
+#> The hyperedges are called:
+#>  h1, h2, h3 
+#> 
+#> The hyperedges have the structure:
+#> $h1
+#> v1 v2 v3 
+#>  1  2  3 
+#> 
+#> $h2
+#> v3 v4 v5 
+#>  3  4  5 
+#> 
+#> $h3
+#> v2 v4 
+#>  2  4
+```
+
+hypR represents oriented hypergraphs using a list of two incidence
+matrices. The first inidence matrix represents incidence to one end of
+the oriented hyperedge and the other represents incidence to the other
+end (it doesn’t matter which way round these are). An example is given
+below
+
+``` r
+i2 <- list(
+  matrix(
+    c(1,1,0,0,1,0,0,1,0,1,1,0),
+    nrow = 4,
+    ncol = 3,
+    dimnames = list(
+      paste0("v", 1:4),
+      paste0("h", 1:3)
+    )
+  ),
+  matrix(
+    c(0,0,1,1,1,1,0,0,1,0,1,0),
+    nrow = 4,
+    ncol = 3,
+    dimnames = list(
+      paste0("v", 1:4),
+      paste0("h", 1:3)
+    )
+  )
+)
+i2
+#> [[1]]
+#>    h1 h2 h3
+#> v1  1  1  0
+#> v2  1  0  1
+#> v3  0  0  1
+#> v4  0  1  0
+#> 
+#> [[2]]
+#>    h1 h2 h3
+#> v1  0  1  1
+#> v2  0  1  0
+#> v3  1  0  1
+#> v4  1  0  0
+```
+
+This can be turned into an oriented hypergraph by passing it to the same
+function
+
+``` r
+hype2 <- hype_from_inc_mat(i2)
+hype_info(hype2, weighted = FALSE, real_coef = FALSE)
+#> ====================HYPERGRAPH INFORMATION====================
+#> 
+#> --------------------VERTEX INFORMATION--------------------
+#> 
+#> This hypergraph has  4  vertices
+#> 
+#> These vertices are called:
+#>  v1, v2, v3, v4 
+#> 
+#> --------------------HYPEREDGE INFORMATION--------------------
+#> 
+#> The hyperedges are called:
+#>  h1, h2, h3 
+#> 
+#> The hyperedges have the structure:
+#> [[1]]
+#> [[1]][[1]]
+#> [1] 1
+#> 
+#> [[1]][[2]]
+#> [1] 3
+#> 
+#> 
+#> [[2]]
+#> [[2]][[1]]
+#> [1] 2
+#> 
+#> [[2]][[2]]
+#> [1] 4
+#> 
+#> 
+#> [[3]]
+#> [[3]][[1]]
+#> [1] 1
+#> 
+#> [[3]][[2]]
+#> [1] 1
+#> 
+#> 
+#> [[4]]
+#> [[4]][[1]]
+#> [1] 4
+#> 
+#> [[4]][[2]]
+#> [1] 2
+#> 
+#> 
+#> [[5]]
+#> [[5]][[1]]
+#> [1] 2
+#> 
+#> [[5]][[2]]
+#> [1] 1
+#> 
+#> 
+#> [[6]]
+#> [[6]][[1]]
+#> [1] 3
+#> 
+#> [[6]][[2]]
+#> [1] 3
+#> 
+#> 
+#> --------------------Orientation Information--------------------
+#> 
+#> This hypergraph is oriented
+#> 
+#> This hypergraph is not directed
+```
+
+It can also be turned into a directed hypergraph using the directing
+option
+
+``` r
+hype3 <- hype_from_inc_mat(i2, directed = TRUE)
+hype_info(hype3, weighted = FALSE, real_coef = FALSE)
+#> ====================HYPERGRAPH INFORMATION====================
+#> 
+#> --------------------VERTEX INFORMATION--------------------
+#> 
+#> This hypergraph has  4  vertices
+#> 
+#> These vertices are called:
+#>  v1, v2, v3, v4 
+#> 
+#> --------------------HYPEREDGE INFORMATION--------------------
+#> 
+#> The hyperedges are called:
+#>  h1, h2, h3 
+#> 
+#> The hyperedges have the structure:
+#> [[1]]
+#> [[1]]$from
+#> [1] 1
+#> 
+#> [[1]]$to
+#> [1] 3
+#> 
+#> 
+#> [[2]]
+#> [[2]]$from
+#> [1] 2
+#> 
+#> [[2]]$to
+#> [1] 4
+#> 
+#> 
+#> [[3]]
+#> [[3]]$from
+#> [1] 1
+#> 
+#> [[3]]$to
+#> [1] 1
+#> 
+#> 
+#> [[4]]
+#> [[4]]$from
+#> [1] 4
+#> 
+#> [[4]]$to
+#> [1] 2
+#> 
+#> 
+#> [[5]]
+#> [[5]]$from
+#> [1] 2
+#> 
+#> [[5]]$to
+#> [1] 1
+#> 
+#> 
+#> [[6]]
+#> [[6]]$from
+#> [1] 3
+#> 
+#> [[6]]$to
+#> [1] 3
+#> 
+#> 
+#> --------------------Orientation Information--------------------
+#> 
+#> This hypergraph is oriented
+#> 
+#> This hypergraph is directed
+```
 
 # Hypergraph Objects
 

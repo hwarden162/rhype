@@ -163,16 +163,16 @@ Here is an example of an oriented list
 ```{r}
 l2 <- list(
   h1 = list(
-    c(1,2),
-    c(2,3)
+    c("a","b"),
+    c("b","c")
   ),
   h2 = list(
-    c(2,3,4),
-    c(5,6)
+    c("b","c","d"),
+    c("e","f")
   ),
   h3 = list(
-    6,
-    1
+    "f",
+    "a"
   )
 )
 ```
@@ -191,7 +191,7 @@ hype3 <- hype_from_edge_list(l2, directed = TRUE)
 hype_info(hype3, weighted = FALSE, real_coef = FALSE)
 ```
 
-```{r}
+```{r, echo=FALSE}
 rm(list = ls())
 ```
 
