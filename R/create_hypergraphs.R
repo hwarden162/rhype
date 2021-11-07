@@ -16,6 +16,29 @@
 #' @export
 #'
 #' @examples
+#' l1 <- list(
+#'   h1 = c("a", "b", "c"),
+#'   h2 = c("c", "d", "e"),
+#'   h3 = c("a", "e")
+#' )
+#' hype1 <- hype_from_edge_list(l1)
+#'
+#' l2 <- list(
+#'   h1 = list(
+#'     c("a", "b"),
+#'     c("b", "c")
+#'   ),
+#'   h2 = list(
+#'     c("b", "c", "d"),
+#'     c("e", "f")
+#'   ),
+#'   h3 = list(
+#'     "f",
+#'     "a"
+#'   )
+#' )
+#' hype2 <- hype_from_edge_list(l2)
+#' hype3 <- hype_from_edge_list(l2, directed = TRUE)
 hype_from_edge_list <- function(elist, directed = FALSE) {
 
   # Checking whether the hypergraph has any hyperedges
@@ -106,6 +129,39 @@ hype_from_edge_list <- function(elist, directed = FALSE) {
 #' @export
 #'
 #' @examples
+#' i1 <- matrix(
+#'   c(1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0),
+#'   nrow = 5,
+#'   ncol = 3,
+#'   dimnames = list(
+#'     paste0("v", 1:5),
+#'     paste0("h", 1:3)
+#'   )
+#' )
+#' hype1 <- hype_from_inc_mat(i1)
+#'
+#' i2 <- list(
+#'   matrix(
+#'     c(1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0),
+#'     nrow = 4,
+#'     ncol = 3,
+#'     dimnames = list(
+#'       paste0("v", 1:4),
+#'       paste0("h", 1:3)
+#'     )
+#'   ),
+#'   matrix(
+#'     c(0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0),
+#'     nrow = 4,
+#'     ncol = 3,
+#'     dimnames = list(
+#'       paste0("v", 1:4),
+#'       paste0("h", 1:3)
+#'     )
+#'   )
+#' )
+#' hype2 <- hype_from_inc_mat(i2)
+#' hype3 <- hype_from_inc_mat(i2, directed = TRUE)
 hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
   # Checking if the incidence matrix is for an oriented hypergraph
   if (is.list(inc_mat)) {
@@ -126,12 +182,12 @@ hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
     # Finding tail elements of hyperedges
     tail_list <- list()
     for (i in 1:dim(inc_mat[[1]])[2]) {
-      tail_list[[i]] <- vnames[which(inc_mat[[1]][,i] != 0)]
+      tail_list[[i]] <- vnames[which(inc_mat[[1]][, i] != 0)]
     }
     # Finding head elements of hyperedges
     head_list <- list()
     for (i in 1:dim(inc_mat[[2]])[2]) {
-      head_list[[i]] <- vnames[which(inc_mat[[2]][,i] != 0)]
+      head_list[[i]] <- vnames[which(inc_mat[[2]][, i] != 0)]
     }
 
     # Generating hyperedge list

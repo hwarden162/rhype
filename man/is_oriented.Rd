@@ -15,3 +15,7 @@ A logical value indicating whether the hyperedges are oriented.
 \description{
 Takes a hypergraph object and returns whether the hyperedges are oriented.
 }
+\examples{
+h <- example_hype()
+is_oriented(h)
+}

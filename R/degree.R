@@ -32,6 +32,8 @@
 #' @export
 #'
 #' @examples
+#' h1 <- example_hype()
+#' degree(h1)
 degree <- function(hype, method = "vertex") {
   # Checking the hyeprgraph is not oriented
   if (hype$get_oriented()) {

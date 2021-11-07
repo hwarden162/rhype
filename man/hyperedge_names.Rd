@@ -17,3 +17,7 @@ instead.
 \description{
 Takes a hypergraph object and returns the names of the hyperedges.
 }
+\examples{
+h <- example_hype()
+hyperedge_names(h)
+}

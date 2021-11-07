@@ -22,3 +22,8 @@ with respect to the given matrix
 \description{
 Find the Spectral Distance Between Two Hypergraphs
 }
+\examples{
+h1 <- example_hype()
+h2 <- example_hype()
+spectral_distance(h1,h2)
+}

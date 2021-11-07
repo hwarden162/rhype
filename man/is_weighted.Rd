@@ -17,3 +17,7 @@ associated with its vertices or hyperedges.
 Takes a hypergraph object and returns whether a hypergraph has weights
 associated with its vertices or hyperedges.
 }
+\examples{
+h <- example_hype()
+is_weighted(h)
+}

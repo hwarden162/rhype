@@ -22,3 +22,38 @@ A hypergraph object with the given incidence structure.
 \description{
 Create a Hypergraph From an Incidence Matrix
 }
+\examples{
+i1 <- matrix(
+  c(1,1,1,0,0,0,0,1,1,1,0,1,0,1,0),
+  nrow = 5,
+  ncol = 3,
+  dimnames = list(
+    paste0("v", 1:5),
+    paste0("h", 1:3)
+  )
+)
+hype1 <- hype_from_inc_mat(i1)
+
+i2 <- list(
+  matrix(
+    c(1,1,0,0,1,0,0,1,0,1,1,0),
+    nrow = 4,
+    ncol = 3,
+    dimnames = list(
+      paste0("v", 1:4),
+      paste0("h", 1:3)
+    )
+  ),
+  matrix(
+    c(0,0,1,1,1,1,0,0,1,0,1,0),
+    nrow = 4,
+    ncol = 3,
+    dimnames = list(
+      paste0("v", 1:4),
+      paste0("h", 1:3)
+    )
+  )
+)
+hype2 <- hype_from_inc_mat(i2)
+hype3 <- hype_from_inc_mat(i2, directed = TRUE)
+}

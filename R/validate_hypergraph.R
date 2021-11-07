@@ -25,6 +25,8 @@
 #' @export
 #'
 #' @examples
+#' h <- example_hype()
+#' validate_hypergraph(h)
 validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
   numv <- hype$get_numv()
   elist <- hype$get_elist()
@@ -45,91 +47,91 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
   errorMessageMaj <- ""
   errorMessageMin <- ""
 
-  #Checking numv exists
+  # Checking numv exists
   if (is.null(numv)) {
     isValid <- FALSE
     major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 Number of vertices is missing\n")
   }
 
-  #Checking elist exists
+  # Checking elist exists
   if (is.null(elist)) {
     isValid <- FALSE
     major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 Hyperedge list is missing\n")
   }
 
-  #Checking numv is an number
+  # Checking numv is an number
   if (!is.numeric(numv)) {
     isValid <- FALSE
     major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 Number of vertices should be an integer\n")
   }
 
-  #Checking elist is a list
+  # Checking elist is a list
   if (!is.list(elist)) {
     isValid <- FALSE
     major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 Hyperedge list should be a list\n")
   }
 
-  #Checking vnames is a vector of characters
+  # Checking vnames is a vector of characters
   if (!is.character(vnames)) {
     isValid <- FALSE
     major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 Vertex names should be a vector of characters\n")
   }
 
-  #Checking vweights is a vector of numbers
+  # Checking vweights is a vector of numbers
   if (!is.numeric(vweights) & weighted) {
     isValid <- FALSE
     major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 Vertex weights should be a vector of numbers\n")
   }
 
-  #Checking enames is a vector of characters
+  # Checking enames is a vector of characters
   if (!is.character(enames)) {
     isValid <- FALSE
     major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 Hyperedge names should be a vector of characters\n")
   }
 
-  #Checking eweights is a vector of numbers
+  # Checking eweights is a vector of numbers
   if (!is.numeric(eweights) & weighted) {
     isValid <- FALSE
     major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 Hyperedge weights should be a vector of numbers\n")
   }
 
-  #Checking weighted is a logical value
+  # Checking weighted is a logical value
   if (!is.logical(weighted)) {
     isValid <- FALSE
     major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 Weighted should be a logical value\n")
   }
 
-  #Checking oriented is a logical value
+  # Checking oriented is a logical value
   if (!is.logical(oriented)) {
     isValid <- FALSE
     major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 Oriented should be a logical value\n")
   }
 
-  #Checking directed is a logical value
+  # Checking directed is a logical value
   if (!is.logical(directed)) {
     isValid <- FALSE
     major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 Directed should be a logical value\n")
   }
 
-  #Checking real_coef is a logical value
+  # Checking real_coef is a logical value
   if (!is.logical(real_coef)) {
     isValid <- FALSE
     major_faults <- major_faults + 1
     errorMessageMaj <- paste(errorMessageMaj, "\u2716 Real coefficients should be a logical value\n")
   }
 
-  #Checking inc_mat is a list, matrix or is null
+  # Checking inc_mat is a list, matrix or is null
   if (!(is.list(inc_mat) | is.matrix(inc_mat) | is.null(inc_mat))) {
     isValid <- FALSE
     major_faults <- major_faults + 1

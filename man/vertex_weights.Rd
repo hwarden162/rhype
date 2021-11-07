@@ -17,3 +17,7 @@ has no weights associated with its vertices it will return \code{NULL} instead.
 Takes a hypergraph object and returns the weights associated with its
 vertices.
 }
+\examples{
+h <- example_hype()
+vertex_weights(h)
+}

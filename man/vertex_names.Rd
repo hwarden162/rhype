@@ -15,3 +15,7 @@ A vector of strings of vertex names
 \description{
 Takes a hypergraph object and returns the names of its vertices.
 }
+\examples{
+h <- example_hype()
+vertex_names(h)
+}

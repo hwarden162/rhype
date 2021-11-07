@@ -16,3 +16,7 @@ The hyperedge normalised laplacian matrix of the hypergraph
 As defined by Jurgen Jost and Raffaella Mulas
 \url{doi:https://doi.org/10.1016/j.aim.2019.05.025}
 }
+\examples{
+h1 <- example_hype()
+hype_norm_lap_mat(h1)
+}

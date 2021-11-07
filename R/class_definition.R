@@ -166,63 +166,61 @@ Hypergraph <- R6::R6Class(
 #'
 #' hype3 <- example_hype(oriented = TRUE, directed = TRUE, real_coef = TRUE)
 #' hype_info(hype3)
-hype_info <- function(
-  hype,
-  numv = TRUE,
-  elist = TRUE,
-  vnames = TRUE,
-  vweights = TRUE,
-  enames = TRUE,
-  eweights = TRUE,
-  weighted = TRUE,
-  oriented = TRUE,
-  directed = TRUE,
-  real_coef = TRUE,
-  inc_mat = TRUE
-) {
+hype_info <- function(hype,
+                      numv = TRUE,
+                      elist = TRUE,
+                      vnames = TRUE,
+                      vweights = TRUE,
+                      enames = TRUE,
+                      eweights = TRUE,
+                      weighted = TRUE,
+                      oriented = TRUE,
+                      directed = TRUE,
+                      real_coef = TRUE,
+                      inc_mat = TRUE) {
   cat("====================HYPERGRAPH INFORMATION====================\n\n")
 
-  #Check whether information on the vertices should be printed
+  # Check whether information on the vertices should be printed
   if (numv | vnames) {
     cat("--------------------VERTEX INFORMATION--------------------\n\n")
-    #Print information on the number of vertices
+    # Print information on the number of vertices
     if (numv) {
       cat("This hypergraph has ", hype$get_numv(), " vertices\n\n")
     }
-    #Print information on the vertex names
+    # Print information on the vertex names
     if (vnames) {
       cat("These vertices are called:\n", paste0(hype$get_vnames(), collapse = ", "), "\n\n")
     }
   }
 
-  #Check whether information on the hyperedges should be printed
+  # Check whether information on the hyperedges should be printed
   if (elist | enames) {
     cat("--------------------HYPEREDGE INFORMATION--------------------\n\n")
-    #Print information on the hyperedges
+    # Print information on the hyperedges
     if (enames) {
       cat("The hyperedges are called:\n", paste0(hype$get_enames(), collapse = ", "), "\n\n")
     }
-    #Print information on the hyperedge list
+    # Print information on the hyperedge list
     if (elist) {
       cat("The hyperedges have the structure:\n")
       print(hype$get_elist())
     }
   }
 
-  #Check whether information on hypergraph waitings should be printed
+  # Check whether information on hypergraph waitings should be printed
   if (weighted) {
     cat("---------------WEIGHTING INFORMATION--------------------\n\n")
-    #Print hypergraph weightings
+    # Print hypergraph weightings
     if (hype$get_weighted()) {
-      #Print whether the hypergraph is weighted
+      # Print whether the hypergraph is weighted
       cat("This hypergraph is weighted\n\n")
-      #Print the hyperedge weights
+      # Print the hyperedge weights
       if (eweights) {
         cat("The hyperedges have weights:\n")
         print(hype$get_eweights())
         cat("\n")
       }
-      #Print the vertex weights
+      # Print the vertex weights
       if (vweights) {
         cat("The vertices have weights:\n")
         print(hype$get_vweights())
@@ -233,18 +231,18 @@ hype_info <- function(
     }
   }
 
-  #Check whether information on orientation is to be printed
+  # Check whether information on orientation is to be printed
   if (oriented) {
     cat("--------------------Orientation Information--------------------\n\n")
 
-    #Print whether the hypergraph is oriented
+    # Print whether the hypergraph is oriented
     if (hype$get_oriented()) {
       cat("This hypergraph is oriented\n\n")
     } else {
       cat("This hypergraph is not oriented\n\n")
     }
 
-    #Print whethe rthe hypergraph is directed
+    # Print whethe rthe hypergraph is directed
     if (hype$get_directed()) {
       cat("This hypergraph is directed\n\n")
     } else {
@@ -252,13 +250,13 @@ hype_info <- function(
     }
   }
 
-  #Check whether information on real coefficients should be printed
+  # Check whether information on real coefficients should be printed
   if (real_coef) {
     cat("--------------------REAL COEFFICIENTS INFORMATION--------------------\n\n")
-    #Print whether the hypergraph has real coefficients
+    # Print whether the hypergraph has real coefficients
     if (hype$get_real_coef()) {
       cat("This hypergraph has real coefficients associating vertices to hyperedges\n\n")
-      #Check whether the incidence matrix should be printed and print it
+      # Check whether the incidence matrix should be printed and print it
       if (inc_mat) {
         cat("The incidence matrix associating vertices to hyperedges is given by:\n")
         print(hype$get_inc_mat())

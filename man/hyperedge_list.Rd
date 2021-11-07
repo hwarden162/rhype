@@ -16,3 +16,7 @@ structure
 \description{
 Take a hypergraph object and return its hyperedge list.
 }
+\examples{
+h <- example_hype()
+hyperedge_list(h)
+}

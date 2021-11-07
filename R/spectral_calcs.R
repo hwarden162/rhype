@@ -8,6 +8,8 @@
 #' @export
 #'
 #' @examples
+#' h <- example_hype()
+#' spectra(h)
 spectra <- function(hype, matrix = "laplacian") {
   # Finding the eigen decomposition of the relevant matrix
   if (matrix == "laplacian") {
@@ -34,6 +36,9 @@ spectra <- function(hype, matrix = "laplacian") {
 #' @export
 #'
 #' @examples
+#' h1 <- example_hype()
+#' h2 <- example_hype()
+#' spectral_distance(h1, h2)
 spectral_distance <- function(hype1, hype2, matrix = "laplacian") {
   # Finding the eigenvalues of both hypergraphs
   eigen1 <- spectra(hype1, matrix)$values
@@ -55,6 +60,8 @@ spectral_distance <- function(hype1, hype2, matrix = "laplacian") {
 #' @export
 #'
 #' @examples
+#' h <- example_hype()
+#' spectral_distance_disc(h)
 spectral_distance_disc <- function(hype, matrix = "vert_norm_lap_mat") {
   # Checking the matrix is of a valid type
   if ((matrix != "vert_norm_lap_mat") & (matrix != "hype_norm_lap_mat")) {

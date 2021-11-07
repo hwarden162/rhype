@@ -41,3 +41,7 @@ without real coefficients this is equivalent to \code{"hyperedge_simple"}.
 \code{"hyperedge_simple"} just counts the number of hyperedges a vertex is a
 member of.
 }
+\examples{
+h1 <- example_hype()
+degree(h1)
+}

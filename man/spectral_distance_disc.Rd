@@ -18,3 +18,7 @@ The spectral distance from the disconnected hypergraph
 \description{
 Find the Spectral Distance From the Fully Disconnected Hypergraph
 }
+\examples{
+h <- example_hype()
+spectral_distance_disc(h)
+}

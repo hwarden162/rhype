@@ -26,3 +26,28 @@ A hypergraph object with the given hyperedge structure.
 \description{
 Create a Hypergraph From a Hyperedge List
 }
+\examples{
+l1 <- list(
+  h1 = c("a","b","c"),
+  h2 = c("c","d","e"),
+  h3 = c("a", "e")
+)
+hype1 <- hype_from_edge_list(l1)
+
+l2 <- list(
+  h1 = list(
+    c("a","b"),
+    c("b","c")
+  ),
+  h2 = list(
+    c("b","c","d"),
+    c("e","f")
+  ),
+  h3 = list(
+    "f",
+    "a"
+  )
+)
+hype2 <- hype_from_edge_list(l2)
+hype3 <- hype_from_edge_list(l2, directed = TRUE)
+}

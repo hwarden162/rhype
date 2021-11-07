@@ -29,3 +29,10 @@ negative real coefficients as there is a chance no adjacency will be registered
 for two adjacenct vertices. hypR does not check for these cases and they must
 be checked for by the user.
 }
+\examples{
+h1 <- example_hype()
+adjacency_matrix(h1)
+
+h2 <- example_hype(oriented = TRUE, directed = TRUE)
+adjacency_matrix(h2)
+}

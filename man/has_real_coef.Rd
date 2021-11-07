@@ -17,3 +17,7 @@ associating vertices to hyperedges.
 Takes a hypergraph object and returns whether there are real coefficients
 associating vertices to hyperedges.
 }
+\examples{
+h <- example_hype()
+has_real_coef(h)
+}

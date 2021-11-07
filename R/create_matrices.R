@@ -36,6 +36,11 @@ pseudo_invert <- function(vec) {
 #' @export
 #'
 #' @examples
+#' h1 <- example_hype()
+#' incidence_matrix(h1)
+#'
+#' h2 <- example_hype(oriented = TRUE, directed = TRUE)
+#' incidence_matrix(h2)
 incidence_matrix <- function(hype, augment_oriented = TRUE) {
   # If the hypergraph has real coefficients then return the saved incidence matrix
   if (hype$get_real_coef()) {
@@ -124,6 +129,11 @@ incidence_matrix <- function(hype, augment_oriented = TRUE) {
 #' @export
 #'
 #' @examples
+#' h1 <- example_hype()
+#' adjacency_matrix(h1)
+#'
+#' h2 <- example_hype(oriented = TRUE, directed = TRUE)
+#' adjacency_matrix(h2)
 adjacency_matrix <- function(hype, normalise = TRUE, self_adj = TRUE) {
   # Finding the incidence matrix
   inc_mat <- incidence_matrix(hype)
@@ -168,6 +178,8 @@ adjacency_matrix <- function(hype, normalise = TRUE, self_adj = TRUE) {
 #' @export
 #'
 #' @examples
+#' h1 <- example_hype()
+#' laplacian_matrix(h1)
 laplacian_matrix <- function(hype) {
   # Checking the hypergraph is not oriented
   if (hype$get_oriented()) {
@@ -196,8 +208,10 @@ laplacian_matrix <- function(hype) {
 #' @export
 #'
 #' @examples
+#' h1 <- example_hype()
+#' vert_norm_lap_mat(h1)
 vert_norm_lap_mat <- function(hype) {
-  # Checing the hypergraph is not oriented
+  # Checking the hypergraph is not oriented
   if (hype$get_oriented()) {
     stop("\n \u2716 This function is not yet available for oriented hypergraphs")
   }
@@ -220,6 +234,8 @@ vert_norm_lap_mat <- function(hype) {
 #' @export
 #'
 #' @examples
+#' h1 <- example_hype()
+#' hype_norm_lap_mat(h1)
 hype_norm_lap_mat <- function(hype) {
   # Checking the hypergraph is not oriented
   if (hype$get_oriented()) {

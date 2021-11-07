@@ -15,3 +15,7 @@ A logical value indicating whether the hyperedges are directed.
 \description{
 Takes a hypergraph object and returns whether the hyperedges are directed.
 }
+\examples{
+h <- example_hype()
+is_directed(h)
+}

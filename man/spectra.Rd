@@ -18,3 +18,7 @@ The eigen decomposition of the given matrix of the given hypergraph
 \description{
 Find the Spectra of a Hypergraph
 }
+\examples{
+h <- example_hype()
+spectra(h)
+}

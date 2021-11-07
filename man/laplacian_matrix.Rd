@@ -15,3 +15,7 @@ The laplacian matrix of the hypergraph
 \description{
 Find the Laplacian Matrix of a Hypergraph
 }
+\examples{
+h1 <- example_hype()
+laplacian_matrix(h1)
+}

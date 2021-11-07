@@ -29,3 +29,10 @@ in calculations. The \code{augment_oriented} option turns the hypergraph into a
 directed hypergraph, but each hyperedge is represented twice, once pointing
 in each direction. This is much easier to use for further calculations.
 }
+\examples{
+h1 <- example_hype()
+incidence_matrix(h1)
+
+h2 <- example_hype(oriented = TRUE, directed = TRUE)
+incidence_matrix(h2)
+}

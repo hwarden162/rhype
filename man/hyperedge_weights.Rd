@@ -17,3 +17,7 @@ wieghts assicated with the hyperedges then \code{NULL} is returned instead.
 Takes a hypergraph object and returns the weights associated with each
 hyperedge
 }
+\examples{
+h <- example_hype()
+hyperedge_weights(h)
+}

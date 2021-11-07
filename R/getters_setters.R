@@ -9,6 +9,8 @@
 #' @export
 #'
 #' @examples
+#' h <- example_hype()
+#' hyperedge_list(h)
 hyperedge_list <- function(hype) {
   hype$get_elist()
 }
@@ -23,6 +25,8 @@ hyperedge_list <- function(hype) {
 #' @export
 #'
 #' @examples
+#' h <- example_hype()
+#' vertex_names(h)
 vertex_names <- function(hype) {
   hype$get_vnames()
 }
@@ -39,6 +43,8 @@ vertex_names <- function(hype) {
 #' @export
 #'
 #' @examples
+#' h <- example_hype()
+#' vertex_weights(h)
 vertex_weights <- function(hype) {
   hype$get_vweights()
 }
@@ -55,6 +61,8 @@ vertex_weights <- function(hype) {
 #' @export
 #'
 #' @examples
+#' h <- example_hype()
+#' hyperedge_names(h)
 hyperedge_names <- function(hype) {
   hype$get_enames()
 }
@@ -71,6 +79,8 @@ hyperedge_names <- function(hype) {
 #' @export
 #'
 #' @examples
+#' h <- example_hype()
+#' hyperedge_weights(h)
 hyperedge_weights <- function(hype) {
   hype$get_eweights()
 }
@@ -87,6 +97,8 @@ hyperedge_weights <- function(hype) {
 #' @export
 #'
 #' @examples
+#' h <- example_hype()
+#' is_weighted(h)
 is_weighted <- function(hype) {
   hype$get_weighted()
 }
@@ -101,6 +113,8 @@ is_weighted <- function(hype) {
 #' @export
 #'
 #' @examples
+#' h <- example_hype()
+#' is_oriented(h)
 is_oriented <- function(hype) {
   hype$get_oriented()
 }
@@ -115,6 +129,8 @@ is_oriented <- function(hype) {
 #' @export
 #'
 #' @examples
+#' h <- example_hype()
+#' is_directed(h)
 is_directed <- function(hype) {
   hype$get_directed()
 }
@@ -131,6 +147,8 @@ is_directed <- function(hype) {
 #' @export
 #'
 #' @examples
+#' h <- example_hype()
+#' has_real_coef(h)
 has_real_coef <- function(hype) {
   hype$get_real_coef()
 }

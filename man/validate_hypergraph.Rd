@@ -34,3 +34,7 @@ calculate incorrect answers. This function is not exhaustive but will perform
 multiple sanity checks on hypergraph objects and is a good place to start
 when debugging.
 }
+\examples{
+h <- example_hype()
+validate_hypergraph(h)
+}
