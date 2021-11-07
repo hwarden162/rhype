@@ -25,11 +25,11 @@ used practically should pass, but doesn't necessarily mean the
 hypergraph is broken, see text output for more details.
 }
 \description{
-When using the hypR functions, the integrity of a hypergraph object should
+When using the rhype functions, the integrity of a hypergraph object should
 remain intact. However, as the properties of a hypergraph object are
 dependent on one another, it is possible in the case of an error or direct
 object manipulation by the user that a hypergraph object's integrity is
-corrupted. This will cause other hypR functions to either throw errors or to
+corrupted. This will cause other rhype functions to either throw errors or to
 calculate incorrect answers. This function is not exhaustive but will perform
 multiple sanity checks on hypergraph objects and is a good place to start
 when debugging.

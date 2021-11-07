@@ -26,7 +26,7 @@ is symmetric but this is usually not the case for directed.
 \details{
 Great care should be taken when using a hypergraph with mixed positive and
 negative real coefficients as there is a chance no adjacency will be registered
-for two adjacenct vertices. hypR does not check for these cases and they must
+for two adjacenct vertices. rhype does not check for these cases and they must
 be checked for by the user.
 }
 \examples{

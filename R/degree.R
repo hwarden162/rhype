@@ -2,7 +2,7 @@
 #'
 #' The degree of a vertex is a way of expressing how many connections there
 #' are from a vertex to the rest of the hypergraph. The current version of
-#' hypR has three methods for computing degree.
+#' rhype has three methods for computing degree.
 #'
 #' `"vertex"` counts the number of ways it is possible to move to another
 #' vertex. If there are multiple hyperedges connecting two vertices, then each

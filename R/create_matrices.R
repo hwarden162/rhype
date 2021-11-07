@@ -118,7 +118,7 @@ incidence_matrix <- function(hype, augment_oriented = TRUE) {
 #'
 #' Great care should be taken when using a hypergraph with mixed positive and
 #' negative real coefficients as there is a chance no adjacency will be registered
-#' for two adjacenct vertices. hypR does not check for these cases and they must
+#' for two adjacenct vertices. rhype does not check for these cases and they must
 #' be checked for by the user.
 #'
 #' @param hype A hypergraph object

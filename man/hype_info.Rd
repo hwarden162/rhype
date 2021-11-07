@@ -62,9 +62,9 @@ repeatedly call other functions.
 }
 \details{
 This gives a more detailed look at the whole hypegraph object. It is
-intended solely to  aid the user when using hypR and generally should not be
+intended solely to  aid the user when using rhype and generally should not be
 included in final scripts. If a user wants to include this in their final
-script it is instead heavily encouraged that they use other hypR functions to
+script it is instead heavily encouraged that they use other rhype functions to
 generate their own bespoke messages.
 }
 \examples{

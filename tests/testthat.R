@@ -1,4 +1,4 @@
 library(testthat)
-library(hypR)
+library(rhype)
 
-test_check("hypR")
+test_check("rhype")

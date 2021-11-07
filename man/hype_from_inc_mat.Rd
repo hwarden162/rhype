@@ -24,7 +24,7 @@ Create a Hypergraph From an Incidence Matrix
 }
 \examples{
 i1 <- matrix(
-  c(1,1,1,0,0,0,0,1,1,1,0,1,0,1,0),
+  c(1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0),
   nrow = 5,
   ncol = 3,
   dimnames = list(
@@ -36,7 +36,7 @@ hype1 <- hype_from_inc_mat(i1)
 
 i2 <- list(
   matrix(
-    c(1,1,0,0,1,0,0,1,0,1,1,0),
+    c(1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0),
     nrow = 4,
     ncol = 3,
     dimnames = list(
@@ -45,7 +45,7 @@ i2 <- list(
     )
   ),
   matrix(
-    c(0,0,1,1,1,1,0,0,1,0,1,0),
+    c(0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0),
     nrow = 4,
     ncol = 3,
     dimnames = list(

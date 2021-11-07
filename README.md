@@ -1,9 +1,6 @@
-hypR
+rhype
 ================
 
--   [HYPR IS CURRENTLY BEING REWRITTEN - MORE CODE CAN BE FOUND IN THE
-    HYPR-OLD
-    REPO](#hypr-is-currently-being-rewritten---more-code-can-be-found-in-the-hypr-old-repo)
 -   [Introduction](#introduction)
 -   [Installation](#installation)
 -   [Getting Started](#getting-started)
@@ -11,18 +8,18 @@ hypR
     -   [Orientation](#orientation)
     -   [Real Coefficients](#real-coefficients)
     -   [Combining Extra Features](#combining-extra-features)
--   [Creating Hypergraphs](#creating-hypergraphs)
-    -   [Hypergraphs From Hyperedge
+-   [Creating hypergraphs](#creating-hypergraphs)
+    -   [hypergraphs From hyperedge
         Lists](#hypergraphs-from-hyperedge-lists)
-    -   [Hypergraphs From Incidence
+    -   [hypergraphs From Incidence
         Matrices](#hypergraphs-from-incidence-matrices)
--   [Hypergraph Objects](#hypergraph-objects)
+-   [hypergraph Objects](#hypergraph-objects)
     -   [Number of Vertices - `numv`](#number-of-vertices---numv)
-    -   [Hyperedge List - `elist`](#hyperedge-list---elist)
+    -   [hyperedge List - `elist`](#hyperedge-list---elist)
     -   [Vertex Names - `vnames`](#vertex-names---vnames)
     -   [Vertex Weights - `vweights`](#vertex-weights---vweights)
-    -   [Hyperedge Names - `enames`](#hyperedge-names---enames)
-    -   [Hyperedge Weights - `eweights`](#hyperedge-weights---eweights)
+    -   [hyperedge Names - `enames`](#hyperedge-names---enames)
+    -   [hyperedge Weights - `eweights`](#hyperedge-weights---eweights)
     -   [Weighted - `weighted`](#weighted---weighted)
     -   [Oriented - `oriented`](#oriented---oriented)
     -   [Directed - `directed`](#directed---directed)
@@ -31,15 +28,12 @@ hypR
     -   [Incidence Matrix - `inc_mat`](#incidence-matrix---inc_mat)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# HYPR IS CURRENTLY BEING REWRITTEN - MORE CODE CAN BE FOUND IN THE HYPR-OLD REPO
-
 <!-- badges: start -->
 <!-- badges: end -->
 
 # Introduction
 
-The underlying philosophy of hypR is to pass data into a function that
+The underlying philosophy of rhype is to pass data into a function that
 will transform it into a hypergraph object that can then be passed into
 other functions to perform manipulations and calculations. This means
 that once the hypergraph object has been created, no further processing
@@ -50,28 +44,28 @@ workflows with minimal technical skill required.
 However, for those users with a greater technical skillset, they are
 able to work directly with the R6 hypergraph object allowing for
 operations and manipulations that may be prohibited by the other
-functions. Such users are directed to the Hypergraph Objects section for
+functions. Such users are directed to the hypergraph Objects section for
 a more in depth explanation.
 
 # Installation
 
-The development version of hypR is available from
+The development version of rhype is available from
 [GitHub](https://github.com) with:
 
 ``` r
 #install.packages("devtools")
-devtools::install_github("hwarden162/hypR")
+devtools::install_github("hwarden162/rhype")
 ```
 
 # Getting Started
 
-The first thing to do is to create a hypergraph object. Hypergraph
+The first thing to do is to create a hypergraph object. hypergraph
 objects can be created from your own data, but the `example_hype()`
 function can be used to create many different types of hypergraphs that
-are useful for exploring hypR.
+are useful for exploring rhype.
 
 ``` r
-library(hypR)
+library(rhype)
 
 hype1 <- example_hype()
 hype1
@@ -158,7 +152,7 @@ However, if too many of these settings are being set to false it is
 recommended that the user just call out each section of the structure
 individually to investigate.
 
-`hype1` is an example of a very basic hypergraph. `hypR` allows for
+`hype1` is an example of a very basic hypergraph. `rhype` allows for
 three more ways to augment a hypergraph: weighting, orientation and real
 coefficients.
 
@@ -205,9 +199,9 @@ hype_info(hype2, oriented = FALSE, real_coef = FALSE)
 #>  1  2  3  4
 ```
 
-Hyperedge weightings will change the way information is flows through
+hyperedge weightings will change the way information is flows through
 the hypergraph and so will have an effect on almost every calculation
-done in `hypR`. Vertex weightings are currently not used in any `hypR`
+done in `rhype`. Vertex weightings are currently not used in any `rhype`
 functions except as a store for hyperedge weightings in dual
 hypergraphs. However, **this is likely to change**, all efforts will be
 made such that changes should not affect previously written code but
@@ -373,15 +367,15 @@ these real coefficients are non-negative. Although it is possible to put
 negative values as real coefficients, and there are many occasions where
 one may want to, this should be done **with great care**. Negative
 coefficients can cause many problems, expecially when calculating
-hypergraph matrices and hyperpaths between vertices. This is because
+hypergraph matrices and rhypepaths between vertices. This is because
 when calculating the adjacency coefficient between two vertices,
 negative numbers means this can sum to 0. This would mean that the
-vertices will be considered not adjacent (even though they are). hypR
+vertices will be considered not adjacent (even though they are). rhype
 does not check for this so manual checking is necessary.
 
 ## Combining Extra Features
 
-Hypergraph weighting, orientation and real coefficients can all be
+hypergraph weighting, orientation and real coefficients can all be
 combined together the model very complicated systems
 
 ``` r
@@ -468,24 +462,25 @@ changing how information moves globally through hyperedges and vertices
 and real coefficients changing how information moves locally from
 specific vertices to specific hyperedges.
 
-All efforts have been made to make hypR as flexible as possible.
+All efforts have been made to make rhype as flexible as possible.
 However, although the modelling is extremely flexible not all functions
-are able to take all forms of hypergaphs, this will be stated in its
+are able to take all forms of rhypegaphs, this will be stated in its
 documentation or as an error message if an execution is attempted. The
 reason for this is either because the computation is complex and has not
 been finished yet, or because the maths governing this calculation has
 not yet been finished.
 
 If a function does not work for a particular use that you would like,
-please raise it on the [GitHub Repo](https://github.com/hwarden162/hypR)
-to move that job higher up the list of features to add.
+please raise it on the [GitHub
+Repo](https://github.com/hwarden162/rhype) to move that job higher up
+the list of features to add.
 
-# Creating Hypergraphs
+# Creating hypergraphs
 
-There are currently two methods for creating hypergraphs in hypR, using
+There are currently two methods for creating hypergraphs in rhype, using
 a hyperedge list or using an incidence matrix.
 
-## Hypergraphs From Hyperedge Lists
+## hypergraphs From hyperedge Lists
 
 A hyperedge list is a list where each entry represents a hyperedge. For
 an unoriented hyperedge, this can just be represented as a vector of the
@@ -662,7 +657,7 @@ hype_info(hype3, weighted = FALSE, real_coef = FALSE)
 #> This hypergraph is directed
 ```
 
-## Hypergraphs From Incidence Matrices
+## hypergraphs From Incidence Matrices
 
 An incidence matrix can be seen as a table where each row represents a
 vertex and each column represents a hyperedge. Each entry is a 1 if the
@@ -722,7 +717,7 @@ hype_info(hype1, weighted = FALSE, oriented = FALSE, real_coef = FALSE)
 #>  2  4
 ```
 
-hypR represents oriented hypergraphs using a list of two incidence
+rhype represents oriented hypergraphs using a list of two incidence
 matrices. The first inidence matrix represents incidence to one end of
 the oriented hyperedge and the other represents incidence to the other
 end (it doesn’t matter which way round these are). An example is given
@@ -786,52 +781,28 @@ hype_info(hype2, weighted = FALSE, real_coef = FALSE)
 #>  h1, h2, h3 
 #> 
 #> The hyperedges have the structure:
-#> [[1]]
-#> [[1]][[1]]
-#> [1] 1
+#> $h1
+#> $h1[[1]]
+#> [1] "v1" "v2"
 #> 
-#> [[1]][[2]]
-#> [1] 3
-#> 
-#> 
-#> [[2]]
-#> [[2]][[1]]
-#> [1] 2
-#> 
-#> [[2]][[2]]
-#> [1] 4
+#> $h1[[2]]
+#> [1] "v3" "v4"
 #> 
 #> 
-#> [[3]]
-#> [[3]][[1]]
-#> [1] 1
+#> $h2
+#> $h2[[1]]
+#> [1] "v1" "v4"
 #> 
-#> [[3]][[2]]
-#> [1] 1
-#> 
-#> 
-#> [[4]]
-#> [[4]][[1]]
-#> [1] 4
-#> 
-#> [[4]][[2]]
-#> [1] 2
+#> $h2[[2]]
+#> [1] "v1" "v2"
 #> 
 #> 
-#> [[5]]
-#> [[5]][[1]]
-#> [1] 2
+#> $h3
+#> $h3[[1]]
+#> [1] "v2" "v3"
 #> 
-#> [[5]][[2]]
-#> [1] 1
-#> 
-#> 
-#> [[6]]
-#> [[6]][[1]]
-#> [1] 3
-#> 
-#> [[6]][[2]]
-#> [1] 3
+#> $h3[[2]]
+#> [1] "v1" "v3"
 #> 
 #> 
 #> --------------------Orientation Information--------------------
@@ -862,52 +833,28 @@ hype_info(hype3, weighted = FALSE, real_coef = FALSE)
 #>  h1, h2, h3 
 #> 
 #> The hyperedges have the structure:
-#> [[1]]
-#> [[1]]$from
-#> [1] 1
+#> $h1
+#> $h1$from
+#> [1] "v1" "v2"
 #> 
-#> [[1]]$to
-#> [1] 3
-#> 
-#> 
-#> [[2]]
-#> [[2]]$from
-#> [1] 2
-#> 
-#> [[2]]$to
-#> [1] 4
+#> $h1$to
+#> [1] "v3" "v4"
 #> 
 #> 
-#> [[3]]
-#> [[3]]$from
-#> [1] 1
+#> $h2
+#> $h2$from
+#> [1] "v1" "v4"
 #> 
-#> [[3]]$to
-#> [1] 1
-#> 
-#> 
-#> [[4]]
-#> [[4]]$from
-#> [1] 4
-#> 
-#> [[4]]$to
-#> [1] 2
+#> $h2$to
+#> [1] "v1" "v2"
 #> 
 #> 
-#> [[5]]
-#> [[5]]$from
-#> [1] 2
+#> $h3
+#> $h3$from
+#> [1] "v2" "v3"
 #> 
-#> [[5]]$to
-#> [1] 1
-#> 
-#> 
-#> [[6]]
-#> [[6]]$from
-#> [1] 3
-#> 
-#> [[6]]$to
-#> [1] 3
+#> $h3$to
+#> [1] "v1" "v3"
 #> 
 #> 
 #> --------------------Orientation Information--------------------
@@ -917,7 +864,7 @@ hype_info(hype3, weighted = FALSE, real_coef = FALSE)
 #> This hypergraph is directed
 ```
 
-# Hypergraph Objects
+# hypergraph Objects
 
 A hypergraph object is essentially a collection of eleven properties.
 Together, these properties fully describe many different forms of
@@ -929,7 +876,7 @@ below:
 This is simply a postive integer value representing the number of
 vertices the hypergraph has.
 
-## Hyperedge List - `elist`
+## hyperedge List - `elist`
 
 This property is a list where every entry represents a hyperedge.
 
@@ -955,16 +902,16 @@ multiple groups of vertices.
 ## Vertex Weights - `vweights`
 
 This is a vector of weights associated with each vertex. This has little
-practical use in this hypR implementation except to keep track of
+practical use in this rhype implementation except to keep track of
 hyperedge weights when transforming a hypergraph into its dual.
 
-## Hyperedge Names - `enames`
+## hyperedge Names - `enames`
 
 This a vector of strings representing the name of each hyperedge On a
 technical point, this is used as a reference for levels when factoring
 multiple groups of hyperedges.
 
-## Hyperedge Weights - `eweights`
+## hyperedge Weights - `eweights`
 
 This is a vector of weights associated with each hyperedge.
 

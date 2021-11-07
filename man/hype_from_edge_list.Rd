@@ -28,20 +28,20 @@ Create a Hypergraph From a Hyperedge List
 }
 \examples{
 l1 <- list(
-  h1 = c("a","b","c"),
-  h2 = c("c","d","e"),
+  h1 = c("a", "b", "c"),
+  h2 = c("c", "d", "e"),
   h3 = c("a", "e")
 )
 hype1 <- hype_from_edge_list(l1)
 
 l2 <- list(
   h1 = list(
-    c("a","b"),
-    c("b","c")
+    c("a", "b"),
+    c("b", "c")
   ),
   h2 = list(
-    c("b","c","d"),
-    c("e","f")
+    c("b", "c", "d"),
+    c("e", "f")
   ),
   h3 = list(
     "f",

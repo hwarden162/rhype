@@ -1,5 +1,5 @@
 ---
-title: "hypR"
+title: "rhype"
 output: 
   github_document:
     toc: true
@@ -16,32 +16,30 @@ knitr::opts_chunk$set(
 )
 ```
 
-# HYPR IS CURRENTLY BEING REWRITTEN - MORE CODE CAN BE FOUND IN THE HYPR-OLD REPO
-
 <!-- badges: start -->
 <!-- badges: end -->
 
 # Introduction
 
-The underlying philosophy of hypR is to pass data into a function that will transform it into a hypergraph object that can then be passed into other functions to perform manipulations and calculations. This means that once the hypergraph object has been created, no further processing of the data is needed to carry out any operation. This hopefully allows for users to easily implement hypergraph based techniques into their workflows with minimal technical skill required.
+The underlying philosophy of rhype is to pass data into a function that will transform it into a hypergraph object that can then be passed into other functions to perform manipulations and calculations. This means that once the hypergraph object has been created, no further processing of the data is needed to carry out any operation. This hopefully allows for users to easily implement hypergraph based techniques into their workflows with minimal technical skill required.
 
-However, for those users with a greater technical skillset, they are able to work directly with the R6 hypergraph object allowing for operations and manipulations that may be prohibited by the other functions. Such users are directed to the Hypergraph Objects section for a more in depth explanation.
+However, for those users with a greater technical skillset, they are able to work directly with the R6 hypergraph object allowing for operations and manipulations that may be prohibited by the other functions. Such users are directed to the hypergraph Objects section for a more in depth explanation.
 
 # Installation
 
-The development version of hypR is available from [GitHub](https://github.com) with:
+The development version of rhype is available from [GitHub](https://github.com) with:
 
 ``` r
 #install.packages("devtools")
-devtools::install_github("hwarden162/hypR")
+devtools::install_github("hwarden162/rhype")
 ```
 
 # Getting Started
 
-The first thing to do is to create a hypergraph object. Hypergraph objects can be created from your own data, but the `example_hype()` function can be used to create many different types of hypergraphs that are useful for exploring hypR.
+The first thing to do is to create a hypergraph object. hypergraph objects can be created from your own data, but the `example_hype()` function can be used to create many different types of hypergraphs that are useful for exploring rhype.
 
 ```{r}
-library(hypR)
+library(rhype)
 
 hype1 <- example_hype()
 hype1
@@ -61,7 +59,7 @@ hype_info(hype1, weighted = FALSE, oriented = FALSE, real_coef = FALSE)
 
 However, if too many of these settings are being set to false it is recommended that the user just call out each section of the structure individually to investigate.
 
-`hype1` is an example of a very basic hypergraph. `hypR` allows for three more ways to augment a hypergraph: weighting, orientation and real coefficients.
+`hype1` is an example of a very basic hypergraph. `rhype` allows for three more ways to augment a hypergraph: weighting, orientation and real coefficients.
 
 ## Weighting
 
@@ -73,7 +71,7 @@ hype2 <- example_hype(vertex_weighted = TRUE, edge_weighted = TRUE)
 hype_info(hype2, oriented = FALSE, real_coef = FALSE)
 ```
 
-Hyperedge weightings will change the way information is flows through the hypergraph and so will have an effect on almost every calculation done in `hypR`. Vertex weightings are currently not used in any `hypR` functions except as a store for hyperedge weightings in dual hypergraphs. However, **this is likely to change**, all efforts will be made such that changes should not affect previously written code but this may not be possible/feasible.
+hyperedge weightings will change the way information is flows through the hypergraph and so will have an effect on almost every calculation done in `rhype`. Vertex weightings are currently not used in any `rhype` functions except as a store for hyperedge weightings in dual hypergraphs. However, **this is likely to change**, all efforts will be made such that changes should not affect previously written code but this may not be possible/feasible.
 
 ## Orientation
 
@@ -106,11 +104,11 @@ hype_info(hype5, weighted = FALSE, oriented = FALSE)
 
 At the bottom of the printout for `hype5` an incidence matrix can be seen, this can essentially be viewed as a table that shows how strongly connected each vertex (row) is connected to each hyperedge (column).
 
-A vertex is considered to be a member of a hyperedge if the respective entry in the matrix is not 0. However, there is a soft assumption that these real coefficients are non-negative. Although it is possible to put negative values as real coefficients, and there are many occasions where one may want to, this should be done **with great care**. Negative coefficients can cause many problems, expecially when calculating hypergraph matrices and hyperpaths between vertices. This is because when calculating the adjacency coefficient between two vertices, negative numbers means this can sum to 0. This would mean that the vertices will be considered not adjacent (even though they are). hypR does not check for this so manual checking is necessary.
+A vertex is considered to be a member of a hyperedge if the respective entry in the matrix is not 0. However, there is a soft assumption that these real coefficients are non-negative. Although it is possible to put negative values as real coefficients, and there are many occasions where one may want to, this should be done **with great care**. Negative coefficients can cause many problems, expecially when calculating hypergraph matrices and rhypepaths between vertices. This is because when calculating the adjacency coefficient between two vertices, negative numbers means this can sum to 0. This would mean that the vertices will be considered not adjacent (even though they are). rhype does not check for this so manual checking is necessary.
 
 ## Combining Extra Features
 
-Hypergraph weighting, orientation and real coefficients can all be combined together the model very complicated systems
+hypergraph weighting, orientation and real coefficients can all be combined together the model very complicated systems
 
 ```{r}
 hype6 <- example_hype(
@@ -125,19 +123,19 @@ hype_info(hype6)
 
 All of these feature will interact together, with orientations restricting the movement of information across hyperedges, weightings changing how information moves globally through hyperedges and vertices and real coefficients changing how information moves locally from specific vertices to specific hyperedges.
 
-All efforts have been made to make hypR as flexible as possible. However, although the modelling is extremely flexible not all functions are able to take all forms of hypergaphs, this will be stated in its documentation or as an error message if an execution is attempted. The reason for this is either because the computation is complex and has not been finished yet, or because the maths governing this calculation has not yet been finished. 
+All efforts have been made to make rhype as flexible as possible. However, although the modelling is extremely flexible not all functions are able to take all forms of rhypegaphs, this will be stated in its documentation or as an error message if an execution is attempted. The reason for this is either because the computation is complex and has not been finished yet, or because the maths governing this calculation has not yet been finished. 
 
-If a function does not work for a particular use that you would like, please raise it on the [GitHub Repo](https://github.com/hwarden162/hypR) to move that job higher up the list of features to add.
+If a function does not work for a particular use that you would like, please raise it on the [GitHub Repo](https://github.com/hwarden162/rhype) to move that job higher up the list of features to add.
 
 ```{r, echo=FALSE}
 rm(list = ls())
 ```
 
-# Creating Hypergraphs
+# Creating hypergraphs
 
-There are currently two methods for creating hypergraphs in hypR, using a hyperedge list or using an incidence matrix.
+There are currently two methods for creating hypergraphs in rhype, using a hyperedge list or using an incidence matrix.
 
-## Hypergraphs From Hyperedge Lists
+## hypergraphs From hyperedge Lists
 
 A hyperedge list is a list where each entry represents a hyperedge. For an unoriented hyperedge, this can just be represented as a vector of the vertices in the hyperedge. For an oriented hyperedge, this can be represented as a list of two vectors, with each vector containing the vertices in one end of the hyperedge. For an oriented hyperedge, the first vector represents all vertices in the tail of a hyperedge and the second all vertices in the head.
 
@@ -195,7 +193,7 @@ hype_info(hype3, weighted = FALSE, real_coef = FALSE)
 rm(list = ls())
 ```
 
-## Hypergraphs From Incidence Matrices
+## hypergraphs From Incidence Matrices
 
 An incidence matrix can be seen as a table where each row represents a vertex and each column represents a hyperedge. Each entry is a 1 if the vertex is a member of the hyperedge and a 0 if it is not. An example incidence matrix is given below
 
@@ -219,7 +217,7 @@ hype1 <- hype_from_inc_mat(i1)
 hype_info(hype1, weighted = FALSE, oriented = FALSE, real_coef = FALSE)
 ```
 
-hypR represents oriented hypergraphs using a list of two incidence matrices. The first inidence matrix represents incidence to one end of the oriented hyperedge and the other represents incidence to the other end (it doesn't matter which way round these are). An example is given below
+rhype represents oriented hypergraphs using a list of two incidence matrices. The first inidence matrix represents incidence to one end of the oriented hyperedge and the other represents incidence to the other end (it doesn't matter which way round these are). An example is given below
 
 ```{r}
 i2 <- list(
@@ -259,7 +257,7 @@ hype3 <- hype_from_inc_mat(i2, directed = TRUE)
 hype_info(hype3, weighted = FALSE, real_coef = FALSE)
 ```
 
-# Hypergraph Objects
+# hypergraph Objects
 
 A hypergraph object is essentially a collection of eleven properties. Together, these properties fully describe many different forms of hypergraphs. These properties are listed and explained more in depth below:
 
@@ -267,7 +265,7 @@ A hypergraph object is essentially a collection of eleven properties. Together, 
 
 This is simply a postive integer value representing the number of vertices the hypergraph has.
 
-## Hyperedge List - `elist`
+## hyperedge List - `elist`
 
 This property is a list where every entry represents a hyperedge.
 
@@ -283,13 +281,13 @@ This a vector of strings representing the name of each vertex. On a technical po
 
 ## Vertex Weights - `vweights`
 
-This is a vector of weights associated with each vertex. This has little practical use in this hypR implementation except to keep track of hyperedge weights when transforming a hypergraph into its dual.
+This is a vector of weights associated with each vertex. This has little practical use in this rhype implementation except to keep track of hyperedge weights when transforming a hypergraph into its dual.
 
-## Hyperedge Names  - `enames`
+## hyperedge Names  - `enames`
 
 This a vector of strings representing the name of each hyperedge On a technical point, this is used as a reference for levels when factoring multiple groups of hyperedges.
 
-## Hyperedge Weights - `eweights`
+## hyperedge Weights - `eweights`
 
 This is a vector of weights associated with each hyperedge.
 
