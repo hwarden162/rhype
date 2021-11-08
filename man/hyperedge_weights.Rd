@@ -11,7 +11,7 @@ hyperedge_weights(hype)
 }
 \value{
 A vector of weights asssociated with the hyperedges. If the are no
-wieghts assicated with the hyperedges then \code{NULL} is returned instead.
+weights assicated with the hyperedges then \code{NULL} is returned instead.
 }
 \description{
 Takes a hypergraph object and returns the weights associated with each

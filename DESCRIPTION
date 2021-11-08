@@ -1,5 +1,5 @@
 Package: rhype
-Title: Work With Hypergraphs In R
+Title: Work with Hypergraphs in R
 Version: 0.0.1
 Authors@R: 
     person("Hugh", "Warden", , "hugh.warden@outlook.com", role = c("aut", "cre"),
@@ -16,5 +16,7 @@ RoxygenNote: 7.1.2
 Imports: 
     R6
 Suggests: 
+    spelling,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Language: en-US

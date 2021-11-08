@@ -14,7 +14,7 @@ The vertex normalised laplacian matrix of the hypergraph
 }
 \description{
 As defined by Jurgen Jost and Raffaella Mulas
-\url{doi:https://doi.org/10.1016/j.aim.2019.05.025}
+\doi{10.1016/j.aim.2019.05.025}
 }
 \examples{
 h1 <- example_hype()

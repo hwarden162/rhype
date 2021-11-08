@@ -200,7 +200,7 @@ laplacian_matrix <- function(hype) {
 #' Find the Vertex Normalised Laplacian Matrix of a Hypergraph
 #'
 #' As defined by Jurgen Jost and Raffaella Mulas
-#' <doi:https://doi.org/10.1016/j.aim.2019.05.025>
+#' \doi{10.1016/j.aim.2019.05.025}
 #'
 #' @param hype A hypergraph object
 #'
@@ -226,7 +226,7 @@ vert_norm_lap_mat <- function(hype) {
 #' Find the Hyperedge Normalised Laplacian Matrix of a Hypergraph
 #'
 #' As defined by Jurgen Jost and Raffaella Mulas
-#' <doi:https://doi.org/10.1016/j.aim.2019.05.025>
+#' \doi{10.1016/j.aim.2019.05.025}
 #'
 #' @param hype A hypergraph object
 #'

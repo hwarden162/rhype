@@ -75,7 +75,7 @@ hyperedge_names <- function(hype) {
 #' @param hype A hypergraph object.
 #'
 #' @return A vector of weights asssociated with the hyperedges. If the are no
-#'     wieghts assicated with the hyperedges then `NULL` is returned instead.
+#'     weights assicated with the hyperedges then `NULL` is returned instead.
 #' @export
 #'
 #' @examples

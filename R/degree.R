@@ -16,9 +16,9 @@
 #'
 #' `"hyperedge"` represents the strength with which a vertex connects with
 #' itself through the hyperedges it is a member of. This is taken from the work
-#' of Jurgen Jost and Raffaella Mulas
-#' <doi:https://doi.org/10.1016/j.aim.2019.05.025>. For unweighted hypergraphs
-#' without real coefficients this is equivalent to `"hyperedge_simple"`.
+#' of Jurgen Jost and Raffaella Mulas \doi{10.1016/j.aim.2019.05.025}. For
+#' unweighted hypergraphs without real coefficients this is equivalent to
+#' `"hyperedge_simple"`.
 #'
 #' `"hyperedge_simple"` just counts the number of hyperedges a vertex is a
 #' member of.
