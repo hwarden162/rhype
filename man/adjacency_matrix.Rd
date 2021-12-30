@@ -4,7 +4,7 @@
 \alias{adjacency_matrix}
 \title{Find the Adjacency Matrix of a Hypergraph}
 \usage{
-adjacency_matrix(hype, normalise = TRUE, self_adj = TRUE)
+adjacency_matrix(hype, normalise = TRUE, self_adj = TRUE, as_matrix = TRUE)
 }
 \arguments{
 \item{hype}{A hypergraph object}
@@ -12,6 +12,8 @@ adjacency_matrix(hype, normalise = TRUE, self_adj = TRUE)
 \item{normalise}{Whether the matrix should be normalised to either 1 or 0}
 
 \item{self_adj}{Whether self adjacency should be represented}
+
+\item{as_matrix}{Whether the output should be coerced into a simple matrix}
 }
 \value{
 A matrix of adjacencies between vertices of a hypergraph.

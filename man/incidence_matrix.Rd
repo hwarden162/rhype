@@ -4,7 +4,7 @@
 \alias{incidence_matrix}
 \title{Find the Incidence Matrix of a Hypergraph}
 \usage{
-incidence_matrix(hype, augment_oriented = TRUE, as_matrix = FALSE)
+incidence_matrix(hype, augment_oriented = TRUE, as_matrix = TRUE)
 }
 \arguments{
 \item{hype}{A hypergraph object}

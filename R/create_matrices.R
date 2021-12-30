@@ -46,7 +46,8 @@ pseudo_invert <- function(vec) {
 #'
 #' h2 <- example_hype(oriented = TRUE, directed = TRUE)
 #' incidence_matrix(h2)
-incidence_matrix <- function(hype, augment_oriented = TRUE, as_matrix = FALSE) {
+# TODO set as_matrix default to FALSE after fixing transpose problem
+incidence_matrix <- function(hype, augment_oriented = TRUE, as_matrix = TRUE) {
   # If the hypergraph has real coefficients then return the saved incidence matrix
   if (hype$get_real_coef()) {
     if (as_matrix) {
@@ -140,6 +141,7 @@ incidence_matrix <- function(hype, augment_oriented = TRUE, as_matrix = FALSE) {
 #' @param hype A hypergraph object
 #' @param normalise Whether the matrix should be normalised to either 1 or 0
 #' @param self_adj Whether self adjacency should be represented
+#' @param as_matrix Whether the output should be coerced into a simple matrix
 #'
 #' @return A matrix of adjacencies between vertices of a hypergraph.
 #' @export
@@ -150,7 +152,8 @@ incidence_matrix <- function(hype, augment_oriented = TRUE, as_matrix = FALSE) {
 #'
 #' h2 <- example_hype(oriented = TRUE, directed = TRUE)
 #' adjacency_matrix(h2)
-adjacency_matrix <- function(hype, normalise = TRUE, self_adj = TRUE) {
+# TODO set as_matrix default as FALSE after fixing transpose problem
+adjacency_matrix <- function(hype, normalise = TRUE, self_adj = TRUE, as_matrix = TRUE) {
   # Finding the incidence matrix
   inc_mat <- incidence_matrix(hype)
 
@@ -183,6 +186,13 @@ adjacency_matrix <- function(hype, normalise = TRUE, self_adj = TRUE) {
   colnames(adj_mat) <- hype$get_vnames()
 
   # Returning the adjacency matrix
+  if (as_matrix) {
+    adj_mat <- as.matrix(adj_mat)
+  } else {
+    # TODO work around for transposing sparse matrix problem. Fix problem and remove.
+    adj_mat <- Matrix::Matrix(adj_mat)
+  }
+
   return(adj_mat)
 }
 
