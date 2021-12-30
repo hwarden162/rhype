@@ -46,8 +46,7 @@ pseudo_invert <- function(vec) {
 #'
 #' h2 <- example_hype(oriented = TRUE, directed = TRUE)
 #' incidence_matrix(h2)
-# TODO set as_matrix default to FALSE after fixing transpose problem
-incidence_matrix <- function(hype, augment_oriented = TRUE, as_matrix = TRUE) {
+incidence_matrix <- function(hype, augment_oriented = TRUE, as_matrix = FALSE) {
   # If the hypergraph has real coefficients then return the saved incidence matrix
   if (hype$get_real_coef()) {
     if (as_matrix) {
@@ -152,8 +151,7 @@ incidence_matrix <- function(hype, augment_oriented = TRUE, as_matrix = TRUE) {
 #'
 #' h2 <- example_hype(oriented = TRUE, directed = TRUE)
 #' adjacency_matrix(h2)
-# TODO set as_matrix default as FALSE after fixing transpose problem
-adjacency_matrix <- function(hype, normalise = TRUE, self_adj = TRUE, as_matrix = TRUE) {
+adjacency_matrix <- function(hype, normalise = TRUE, self_adj = TRUE, as_matrix = FALSE) {
   # Finding the incidence matrix
   inc_mat <- incidence_matrix(hype)
 
@@ -166,9 +164,9 @@ adjacency_matrix <- function(hype, normalise = TRUE, self_adj = TRUE, as_matrix 
 
   # Finding the adjacency matrix using incidence matrices
   if (hype$get_oriented()) {
-    adj_mat <- inc_mat[[1]] %*% (eweights * t(inc_mat[[2]]))
+    adj_mat <- inc_mat[[1]] %*% (eweights * Matrix::t(inc_mat[[2]]))
   } else {
-    adj_mat <- inc_mat %*% (eweights * t(inc_mat))
+    adj_mat <- inc_mat %*% (eweights * Matrix::t(inc_mat))
   }
 
   # Setting the matrix entries to 0 and 1 if specified
@@ -178,7 +176,7 @@ adjacency_matrix <- function(hype, normalise = TRUE, self_adj = TRUE, as_matrix 
 
   # Removing the leading diagonal if specified
   if (!self_adj) {
-    diag(adj_mat) <- 0
+    Matrix::diag(adj_mat) <- 0
   }
 
   # Setting row and column names
@@ -218,7 +216,7 @@ laplacian_matrix <- function(hype) {
   deg <- apply(adj_mat, 1, sum)
   # Transforming the adjacency matrix into the laplacian matrix
   lap_mat <- -1 * adj_mat
-  diag(lap_mat) <- deg
+  Matrix::diag(lap_mat) <- deg
   # Returning the laplacian matrix
   return(lap_mat)
 }
@@ -244,7 +242,7 @@ vert_norm_lap_mat <- function(hype) {
 
   # Finding the laplacian matrix via the adjacency matrix
   lap_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = TRUE)
-  lap_mat <- pseudo_invert(diag(lap_mat)) * lap_mat
+  lap_mat <- pseudo_invert(Matrix::diag(lap_mat)) * lap_mat
   # Returning the laplacian matrix
   return(lap_mat)
 }
@@ -270,7 +268,7 @@ hype_norm_lap_mat <- function(hype) {
 
   # Calculating the laplacian matrix
   inc_mat <- incidence_matrix(hype)
-  lap_mat <- t(inc_mat) %*% (pseudo_invert(degree(hype, method = "hyperedge")) * inc_mat)
+  lap_mat <- Matrix::t(inc_mat) %*% (pseudo_invert(degree(hype, method = "hyperedge")) * inc_mat)
   # Returning the laplacian matrix
   return(lap_mat)
 }

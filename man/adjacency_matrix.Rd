@@ -4,7 +4,7 @@
 \alias{adjacency_matrix}
 \title{Find the Adjacency Matrix of a Hypergraph}
 \usage{
-adjacency_matrix(hype, normalise = TRUE, self_adj = TRUE, as_matrix = TRUE)
+adjacency_matrix(hype, normalise = TRUE, self_adj = TRUE, as_matrix = FALSE)
 }
 \arguments{
 \item{hype}{A hypergraph object}

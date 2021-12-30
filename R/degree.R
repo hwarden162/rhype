@@ -57,7 +57,7 @@ degree <- function(hype, method = "vertex") {
     # Finding the adjacency matrix with self adjacency
     adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = TRUE)
     # Returning the self adjacency
-    return(diag(adj_mat))
+    return(Matrix::diag(adj_mat))
   } else if (method == "hyperedge_simple") {
     # Finding the incidence matrix
     inc_mat <- incidence_matrix(hype)
