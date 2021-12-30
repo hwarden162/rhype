@@ -35,6 +35,7 @@ pseudo_invert <- function(vec) {
 #'
 #' @param hype A hypergraph object
 #' @param augment_oriented Whether to augment an oriented hypergraph
+#' @param as_matrix Whether to coerce the result to a simple matrix
 #'
 #' @return An incidence matrix or a list of two incidence matrices.
 #' @export
@@ -45,10 +46,14 @@ pseudo_invert <- function(vec) {
 #'
 #' h2 <- example_hype(oriented = TRUE, directed = TRUE)
 #' incidence_matrix(h2)
-incidence_matrix <- function(hype, augment_oriented = TRUE) {
+incidence_matrix <- function(hype, augment_oriented = TRUE, as_matrix = FALSE) {
   # If the hypergraph has real coefficients then return the saved incidence matrix
   if (hype$get_real_coef()) {
-    return(hype$get_inc_mat())
+    if (as_matrix) {
+      return(as.matrix(hype$get_inc_mat()))
+    } else {
+      return(hype$get_inc_mat())
+    }
   }
 
   # Finding whether the hypergraph is oriented
@@ -58,10 +63,10 @@ incidence_matrix <- function(hype, augment_oriented = TRUE) {
     numv <- hype$get_numv()
     nume <- length(elist)
 
-    # Initialising emtry incidence matrix
+    # Initialising empty incidence matrix
     inc_mat <- list(
-      matrix(0, nrow = numv, ncol = nume),
-      matrix(0, nrow = numv, ncol = nume)
+      Matrix::Matrix(0, nrow = numv, ncol = nume),
+      Matrix::Matrix(0, nrow = numv, ncol = nume)
     )
 
     # Naming the matrices for directed hypergraphs
@@ -89,6 +94,10 @@ incidence_matrix <- function(hype, augment_oriented = TRUE) {
     }
 
     # Returning the incidence matrix
+    if (as_matrix) {
+      inc_mat[[1]] <- as.matrix(inc_mat[[1]])
+      inc_mat[[2]] <- as.matrix(inc_mat[[2]])
+    }
     return(inc_mat)
   } else {
     # Getting basic hypergraph properties
@@ -97,7 +106,7 @@ incidence_matrix <- function(hype, augment_oriented = TRUE) {
     nume <- length(elist)
 
     # Generating an empty incidence matrix
-    inc_mat <- matrix(0, nrow = numv, ncol = nume)
+    inc_mat <- Matrix::Matrix(0, nrow = numv, ncol = nume)
     # Setting row and column names of the incidence matrix
     rownames(inc_mat) <- hype$get_vnames()
     colnames(inc_mat) <- hype$get_enames()
@@ -108,6 +117,9 @@ incidence_matrix <- function(hype, augment_oriented = TRUE) {
     }
 
     # Return the incidence matrix
+    if (as_matrix) {
+      inc_mat <- as.matrix(inc_mat)
+    }
     return(inc_mat)
   }
 }

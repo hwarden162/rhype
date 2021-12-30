@@ -13,5 +13,7 @@ pseudo_invert(vec)
 A vector of pseudo-inverted numbers
 }
 \description{
-Pseudo-Invert a Vector
+Pseudoinversion is where a vector has each non-zero element inverted and each zero
+element remains untouched. This is useful for pseudoinverting matrices that only have
+non-zero entries on the leading diagonal.
 }

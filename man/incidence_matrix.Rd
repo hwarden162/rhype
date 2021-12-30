@@ -4,12 +4,14 @@
 \alias{incidence_matrix}
 \title{Find the Incidence Matrix of a Hypergraph}
 \usage{
-incidence_matrix(hype, augment_oriented = TRUE)
+incidence_matrix(hype, augment_oriented = TRUE, as_matrix = FALSE)
 }
 \arguments{
 \item{hype}{A hypergraph object}
 
 \item{augment_oriented}{Whether to augment an oriented hypergraph}
+
+\item{as_matrix}{Whether to coerce the result to a simple matrix}
 }
 \value{
 An incidence matrix or a list of two incidence matrices.
