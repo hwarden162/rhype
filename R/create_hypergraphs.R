@@ -166,8 +166,8 @@ hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
   # Checking if the incidence matrix is for an oriented hypergraph
   if (is.list(inc_mat)) {
     # Checking object is a matrix
-    inc_mat[[1]] <- as.matrix(inc_mat[[1]])
-    inc_mat[[2]] <- as.matrix(inc_mat[[2]])
+    inc_mat[[1]] <- Matrix::Matrix(inc_mat[[1]])
+    inc_mat[[2]] <- Matrix::Matrix(inc_mat[[2]])
 
     # Finding the number of vertices
     numv <- dim(inc_mat[[1]])[1]
@@ -230,7 +230,7 @@ hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
     )
   } else {
     # Converting parameter to a matrix
-    inc_mat <- as.matrix(inc_mat)
+    inc_mat <- Matrix::Matrix(inc_mat)
 
     # Finding the number of vertices
     numv <- dim(inc_mat)[1]
