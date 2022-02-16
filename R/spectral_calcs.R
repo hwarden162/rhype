@@ -3,6 +3,8 @@
 #' @param hype A hypergraph object
 #' @param matrix The matrix to calculate the spectra with respect to. Out of
 #' `"laplacian"`, `"adjacency"`, `"vert_norm_lap_mat"` and `"hype_norm_lap_mat"`
+#' @param n The number of eigenvalues or eigenvectors to calculate. If left empty or
+#' as `NULL` all will be calculated.
 #'
 #' @return The eigen decomposition of the given matrix of the given hypergraph
 #' @export
@@ -10,16 +12,76 @@
 #' @examples
 #' h <- example_hype()
 #' spectra(h)
-spectra <- function(hype, matrix = "laplacian") {
+spectra <- function(hype, matrix = "laplacian", n = NULL) {
   # Finding the eigen decomposition of the relevant matrix
   if (matrix == "laplacian") {
-    return(eigen(laplacian_matrix(hype)))
+    if (is.null(n)) {
+      n <- hype$get_numv()
+    }
+    lap_mat <- laplacian_matrix(hype)
+    if (n == hype$get_numv()) {
+      return(
+        eigen(as.matrix(lap_mat))
+      )
+    } else {
+      return(
+        RSpectra::eigs(
+          lap_mat,
+          k = n
+        )
+      )
+    }
   } else if (matrix == "adjacency") {
-    return(eigen(adjacency_matrix(hype, normalise = FALSE, self_adj = TRUE)))
+    if (is.null(n)) {
+      n <- hype$get_numv()
+    }
+    adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = TRUE)
+    if (n == hype$get_numv()) {
+      return(
+        eigen(as.matrix(adj_mat))
+      )
+    } else {
+      return(
+        RSpectra::eigs(
+          adj_mat,
+          k = n
+        )
+      )
+    }
   } else if (matrix == "vert_norm_lap_mat") {
-    return(eigen(vert_norm_lap_mat(hype)))
+    if (is.null(n)) {
+      n <- hype$get_numv()
+    }
+    lap_mat <- vert_norm_lap_mat(hype)
+    if (n == hype$get_numv()) {
+      return(
+        eigen(as.matrix(lap_mat))
+      )
+    } else {
+      return(
+        RSpectra::eigs(
+          lap_mat,
+          k = n
+        )
+      )
+    }
   } else if (matrix == "hype_norm_lap_mat") {
-    return(eigen(hype_norm_lap_mat(hype)))
+    if (is.null(n)) {
+      n <- length(hype$get_elist())
+    }
+    lap_mat <- hype_norm_lap_mat(hype)
+    if (n == length(hype$get_elist())) {
+      return(
+        eigen(as.matrix(lap_mat))
+      )
+    } else {
+      return(
+        RSpectra::eigs(
+          lap_mat,
+          k = n
+        )
+      )
+    }
   }
 }
 

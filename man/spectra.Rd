@@ -4,13 +4,16 @@
 \alias{spectra}
 \title{Find the Spectra of a Hypergraph}
 \usage{
-spectra(hype, matrix = "laplacian")
+spectra(hype, matrix = "laplacian", n = NULL)
 }
 \arguments{
 \item{hype}{A hypergraph object}
 
 \item{matrix}{The matrix to calculate the spectra with respect to. Out of
 \code{"laplacian"}, \code{"adjacency"}, \code{"vert_norm_lap_mat"} and \code{"hype_norm_lap_mat"}}
+
+\item{n}{The number of eigenvalues or eigenvectors to calculate. If left empty or
+as \code{NULL} all will be calculated.}
 }
 \value{
 The eigen decomposition of the given matrix of the given hypergraph

@@ -15,7 +15,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
     Matrix,
-    R6
+    R6,
+    RSpectra
 Suggests: 
     spelling,
     testthat (>= 3.0.0)
