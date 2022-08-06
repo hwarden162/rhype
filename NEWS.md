@@ -1,5 +1,6 @@
-# rhype 0.2.0
+# rhype 0.3.0
 
-* Added a `NEWS.md` file to track changes to the package.
-* Updated functions to operate on multiple sparse matrix types
-* Sped up spectral calculations by allowing users to select how many eigenvalues to calculate
+* Changed spectral function to calculate the spectra of the adjacency matrix without
+using degree on the leading diagonal
+* Added function to calculate the eigenvector centrality of a hypergraph
+* Added getters to find the order and the size of a hypergraph
