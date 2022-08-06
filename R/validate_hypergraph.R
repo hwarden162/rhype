@@ -345,7 +345,7 @@ validate_hypergraph <- function(hype, return = FALSE, verbose = TRUE) {
 
   # Formatting output message
   errorMessageMaj <- paste("  There are", major_faults, "serious problems with this hypergraph:\n", errorMessageMaj)
-  errorMessageMin <- paste("There are", minor_faults, "items that need your attention with this hypergraphs:\n", errorMessageMin)
+  errorMessageMin <- paste("There are", minor_faults, "items that need your attention with this hypergraph:\n", errorMessageMin)
   errorMessage <- paste(errorMessageMaj, errorMessageMin, "These tests are not exhaustive, just an indication of where things might be going wrong.")
 
   if (verbose) {
