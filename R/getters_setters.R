@@ -152,3 +152,33 @@ is_directed <- function(hype) {
 has_real_coef <- function(hype) {
   hype$get_real_coef()
 }
+
+#' Get The Order Of A Hypergraph
+#'
+#' The order of a hypergraph is the number of vertices it has
+#'
+#' @param hype A hypergraph object
+#'
+#' @return A number representing the number of vertices in the hypergraph
+#' @export
+#'
+#' @examples
+#' hype <- example_hype()
+#' hype_order(hype)
+hype_order <- function(hype) {
+  hype$get_numv()
+}
+
+#' Get The Size Of A Hypergraph
+#'
+#' The size of a hypergraph is the number of hyperedges it contains
+#'
+#' @param hype A hypergraph object
+#'
+#' @return A number representing the number of hyperedges in a hypergraph
+#' @export
+#'
+#' @examples
+hype_size <- function(hype) {
+  length(hype$get_elist())
+}
