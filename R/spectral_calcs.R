@@ -35,7 +35,7 @@ spectra <- function(hype, matrix = "laplacian", n = NULL) {
     if (is.null(n)) {
       n <- hype$get_numv()
     }
-    adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = TRUE)
+    adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = FALSE)
     if (n == hype$get_numv()) {
       return(
         eigen(as.matrix(adj_mat))
@@ -83,6 +83,7 @@ spectra <- function(hype, matrix = "laplacian", n = NULL) {
       )
     }
   }
+  stop("\n \u2716 Matrix not recognised")
 }
 
 #' Find the Spectral Distance Between Two Hypergraphs
