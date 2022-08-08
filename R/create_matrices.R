@@ -197,6 +197,7 @@ adjacency_matrix <- function(hype, normalise = FALSE, self_adj = FALSE, as_matri
 #' Find the Laplacian Matrix of a Hypergraph
 #'
 #' @param hype A hypergraph object
+#' @param as_matrix Whether to coerce the result to a simple matrix
 #'
 #' @return The laplacian matrix of the hypergraph
 #' @export
@@ -204,20 +205,26 @@ adjacency_matrix <- function(hype, normalise = FALSE, self_adj = FALSE, as_matri
 #' @examples
 #' h1 <- example_hype()
 #' laplacian_matrix(h1)
-laplacian_matrix <- function(hype) {
+laplacian_matrix <- function(hype, as_matrix = TRUE) {
+  warning("laplacian_matrix finds the simplified support graph laplacian")
+
   # Checking the hypergraph is not oriented
   if (hype$get_oriented()) {
     stop("\n \u2716 This function is not yet available for oriented hypergraphs")
   }
 
   # Finding the adjacency matrix
-  adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = FALSE, as_matrix = FALSE)
+  adj_mat <- adjacency_matrix(hype, normalise = TRUE, self_adj = FALSE, as_matrix = FALSE)
   # Finding the row sum degree
   deg <- apply(adj_mat, 1, sum)
   # Transforming the adjacency matrix into the laplacian matrix
   lap_mat <- -1 * adj_mat
   Matrix::diag(lap_mat) <- deg
+
   # Returning the laplacian matrix
+  if (as_matrix) {
+    lap_mat <- as.matrix(lap_mat)
+  }
   return(lap_mat)
 }
 
@@ -227,6 +234,7 @@ laplacian_matrix <- function(hype) {
 #' \doi{10.1016/j.aim.2019.05.025}
 #'
 #' @param hype A hypergraph object
+#' @param as_matrix Whether to coerce the result to a simple matrix
 #'
 #' @return The vertex normalised laplacian matrix of the hypergraph
 #' @export
@@ -234,7 +242,7 @@ laplacian_matrix <- function(hype) {
 #' @examples
 #' h1 <- example_hype()
 #' vert_norm_lap_mat(h1)
-vert_norm_lap_mat <- function(hype) {
+vert_norm_lap_mat <- function(hype, as_matrix = TRUE) {
   # Checking the hypergraph is not oriented
   if (hype$get_oriented()) {
     stop("\n \u2716 This function is not yet available for oriented hypergraphs")
@@ -244,6 +252,9 @@ vert_norm_lap_mat <- function(hype) {
   lap_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = TRUE, as_matrix = FALSE)
   lap_mat <- pseudo_invert(Matrix::diag(lap_mat)) * lap_mat
   # Returning the laplacian matrix
+  if (as_matrix) {
+    as.matrix(lap_mat)
+  }
   return(lap_mat)
 }
 
@@ -253,6 +264,7 @@ vert_norm_lap_mat <- function(hype) {
 #' \doi{10.1016/j.aim.2019.05.025}
 #'
 #' @param hype A hypergraph object
+#' @param as_matrix Whether to coerce the result to a simple matrix
 #'
 #' @return The hyperedge normalised laplacian matrix of the hypergraph
 #' @export
@@ -260,7 +272,7 @@ vert_norm_lap_mat <- function(hype) {
 #' @examples
 #' h1 <- example_hype()
 #' hype_norm_lap_mat(h1)
-hype_norm_lap_mat <- function(hype) {
+hype_norm_lap_mat <- function(hype, as_matrix = TRUE) {
   # Checking the hypergraph is not oriented
   if (hype$get_oriented()) {
     stop("\n \u2716 This function is not yet available for oriented hypergraphs")
@@ -270,5 +282,8 @@ hype_norm_lap_mat <- function(hype) {
   inc_mat <- incidence_matrix(hype)
   lap_mat <- Matrix::t(inc_mat) %*% (pseudo_invert(degree(hype, method = "hyperedge")) * inc_mat)
   # Returning the laplacian matrix
+  if (as_matrix) {
+    as.matrix(lap_mat)
+  }
   return(lap_mat)
 }

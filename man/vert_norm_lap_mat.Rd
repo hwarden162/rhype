@@ -4,10 +4,12 @@
 \alias{vert_norm_lap_mat}
 \title{Find the Vertex Normalised Laplacian Matrix of a Hypergraph}
 \usage{
-vert_norm_lap_mat(hype)
+vert_norm_lap_mat(hype, as_matrix = TRUE)
 }
 \arguments{
 \item{hype}{A hypergraph object}
+
+\item{as_matrix}{Whether to coerce the result to a simple matrix}
 }
 \value{
 The vertex normalised laplacian matrix of the hypergraph

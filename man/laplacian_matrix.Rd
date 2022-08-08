@@ -4,10 +4,12 @@
 \alias{laplacian_matrix}
 \title{Find the Laplacian Matrix of a Hypergraph}
 \usage{
-laplacian_matrix(hype)
+laplacian_matrix(hype, as_matrix = TRUE)
 }
 \arguments{
 \item{hype}{A hypergraph object}
+
+\item{as_matrix}{Whether to coerce the result to a simple matrix}
 }
 \value{
 The laplacian matrix of the hypergraph
