@@ -34,16 +34,20 @@
 #' @examples
 #' h1 <- example_hype()
 #' degree(h1)
-degree <- function(hype, method = "vertex") {
+degree <- function(hype, method = NA) {
   # Checking the hyeprgraph is not oriented
   if (hype$get_oriented()) {
     stop("\n \u2716 Degree not yet supported for oriented hypergraphs")
+  }
+  if (is.na(method)) {
+    warning("Degree method not chosen, using 'hyperedge' by default")
+    method <- "hyperedge"
   }
 
   # Checking method and computing the corresponding degree
   if (method == "vertex") {
     # Finding the adjacency matrix
-    adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = FALSE, as_matrix = FALSE)
+    adj_mat <- adjacency_matrix(hype, normalise = TRUE, self_adj = FALSE, as_matrix = FALSE)
     # Row summing the adjacency matrix
     return(
       apply(adj_mat, 1, sum)
