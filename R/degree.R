@@ -43,19 +43,19 @@ degree <- function(hype, method = "vertex") {
   # Checking method and computing the corresponding degree
   if (method == "vertex") {
     # Finding the adjacency matrix
-    adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = FALSE)
+    adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = FALSE, as_matrix = FALSE)
     # Row summing the adjacency matrix
     return(
       apply(adj_mat, 1, sum)
     )
   } else if (method == "vertex_simple") {
     # Finding the normalised adjacency matrix
-    adj_mat <- adjacency_matrix(hype, normalise = TRUE, self_adj = FALSE)
+    adj_mat <- adjacency_matrix(hype, normalise = TRUE, self_adj = FALSE, as_matrix = FALSE)
     # Row summing the normalised adjacency matrix
     return(apply(adj_mat, 1, sum))
   } else if (method == "hyperedge") {
     # Finding the adjacency matrix with self adjacency
-    adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = TRUE)
+    adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = TRUE, as_matrix = FALSE)
     # Returning the self adjacency
     return(Matrix::diag(adj_mat))
   } else if (method == "hyperedge_simple") {

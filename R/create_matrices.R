@@ -46,7 +46,7 @@ pseudo_invert <- function(vec) {
 #'
 #' h2 <- example_hype(oriented = TRUE, directed = TRUE)
 #' incidence_matrix(h2)
-incidence_matrix <- function(hype, augment_oriented = TRUE, as_matrix = FALSE) {
+incidence_matrix <- function(hype, augment_oriented = TRUE, as_matrix = TRUE) {
   # If the hypergraph has real coefficients then return the saved incidence matrix
   if (hype$get_real_coef()) {
     if (as_matrix) {
@@ -151,7 +151,7 @@ incidence_matrix <- function(hype, augment_oriented = TRUE, as_matrix = FALSE) {
 #'
 #' h2 <- example_hype(oriented = TRUE, directed = TRUE)
 #' adjacency_matrix(h2)
-adjacency_matrix <- function(hype, normalise = TRUE, self_adj = TRUE, as_matrix = FALSE) {
+adjacency_matrix <- function(hype, normalise = FALSE, self_adj = FALSE, as_matrix = TRUE) {
   # Finding the incidence matrix
   inc_mat <- incidence_matrix(hype)
 
@@ -211,7 +211,7 @@ laplacian_matrix <- function(hype) {
   }
 
   # Finding the adjacency matrix
-  adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = FALSE)
+  adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = FALSE, as_matrix = FALSE)
   # Finding the row sum degree
   deg <- apply(adj_mat, 1, sum)
   # Transforming the adjacency matrix into the laplacian matrix
@@ -241,7 +241,7 @@ vert_norm_lap_mat <- function(hype) {
   }
 
   # Finding the laplacian matrix via the adjacency matrix
-  lap_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = TRUE)
+  lap_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = TRUE, as_matrix = FALSE)
   lap_mat <- pseudo_invert(Matrix::diag(lap_mat)) * lap_mat
   # Returning the laplacian matrix
   return(lap_mat)

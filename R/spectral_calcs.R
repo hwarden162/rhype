@@ -35,7 +35,7 @@ spectra <- function(hype, matrix = "laplacian", n = NULL) {
     if (is.null(n)) {
       n <- hype$get_numv()
     }
-    adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = FALSE)
+    adj_mat <- adjacency_matrix(hype, normalise = FALSE, self_adj = FALSE, as_matrix = FALSE)
     if (n == hype$get_numv()) {
       return(
         eigen(as.matrix(adj_mat))
