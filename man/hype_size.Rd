@@ -15,3 +15,7 @@ A number representing the number of hyperedges in a hypergraph
 \description{
 The size of a hypergraph is the number of hyperedges it contains
 }
+\examples{
+h1 <- example_hype()
+hype_size(h1)
+}
