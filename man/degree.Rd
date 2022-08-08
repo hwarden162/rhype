@@ -4,7 +4,7 @@
 \alias{degree}
 \title{Find the Degree of Vertices in a Hypergraph}
 \usage{
-degree(hype, method = "vertex")
+degree(hype, method = NA)
 }
 \arguments{
 \item{hype}{A hypergraph object}
