@@ -179,6 +179,8 @@ hype_order <- function(hype) {
 #' @export
 #'
 #' @examples
+#' h1 <- example_hype()
+#' hype_size(h1)
 hype_size <- function(hype) {
   length(hype$get_elist())
 }
