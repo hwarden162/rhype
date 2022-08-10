@@ -106,15 +106,16 @@ incidence_matrix <- function(hype, augment_oriented = TRUE, as_matrix = TRUE) {
     nume <- length(elist)
 
     # Generating an empty incidence matrix
-    inc_mat <- Matrix::Matrix(0, nrow = numv, ncol = nume)
+    inc_mat <- matrix(0, nrow = numv, ncol = nume)
     # Setting row and column names of the incidence matrix
     rownames(inc_mat) <- hype$get_vnames()
     colnames(inc_mat) <- hype$get_enames()
 
-    # Iterating through the incidene matrix columns setting relevant entries to 1
+    # Iterating through the incidence matrix columns setting relevant entries to 1
     for (i in 1:nume) {
       inc_mat[elist[[i]], i] <- 1
     }
+    inc_mat <- Matrix::Matrix(inc_mat)
 
     # Return the incidence matrix
     if (as_matrix) {
