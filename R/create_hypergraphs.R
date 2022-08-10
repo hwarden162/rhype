@@ -232,8 +232,10 @@ hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
     # Converting parameter to a matrix
     inc_mat <- Matrix::Matrix(inc_mat)
 
-    # Finding the number of vertices
+    # Finding the number of vertices and hyperedges
     numv <- dim(inc_mat)[1]
+    nume <- dim(inc_mat)[2]
+
 
     # Finding vertex names
     if (!is.null(rownames(inc_mat))) {
@@ -242,10 +244,15 @@ hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
       vnames <- as.character(1:numv)
     }
 
+    # Removing row names of input inc_mat
+    rownames(inc_mat) <- NULL
+
     # Generating hyperedge list
-    elist <- apply(inc_mat, 2, function(x) {
-      which(x != 0)
-    })
+    elist <- list()
+    for (i in 1:nume) {
+      elist[[i]] <- which(inc_mat[,i] != 0)
+      names(elist)[i] <- colnames(inc_mat)[i]
+    }
 
     # Finding hyperedge names
     if (!is.null(colnames(inc_mat))) {
@@ -260,7 +267,7 @@ hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
 
     # If directed is set true but hypergraph is unoriented, outputting warning
     if (directed) {
-      warning("\n Specified incidnece matrix is non-orientable, so can't be directed. Creating unoriented hypergraph instead.")
+      warning("\n Specified incidence matrix is non-orientable, so can't be directed. Creating unoriented hypergraph instead.")
       directed <- FALSE
     }
 
