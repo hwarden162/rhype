@@ -8,7 +8,7 @@ rhype: A Flexible Package For Working With Hypergraphs In R
 coverage](https://codecov.io/gh/hwarden162/rhype/branch/main/graph/badge.svg)](https://app.codecov.io/gh/hwarden162/rhype?branch=main)
 <!-- badges: end -->
 
-# Introduction <img src="man/figures/rhype_hex.png" align="right" width=150px/>
+# Introduction
 
 `rhype` is a package for working with hypergraphs in R. It works under
 the general idea that data can be transformed into a hypergraph object
