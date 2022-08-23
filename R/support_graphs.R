@@ -60,7 +60,7 @@ connectivity_graph <- function(hype) {
   if (hype$get_oriented()) {
     stop("\n \u2716 This funciton is not currently supported for oriented hypegraphs")
   }
-  supp_g <- support_graph(hype_dual(hype), simple = TRUE)
+  supp_g <- support_graph(dual_hype(hype), simple = TRUE)
   igraph::V(supp_g)$color <- "blue"
   igraph::V(supp_g)$source <- "hyperedge"
   supp_g <- igraph::add_vertices(
