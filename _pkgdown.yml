@@ -1,0 +1,11 @@
+url: ~
+destination: /Users/hwarden/Documents/HughWardenWebsite/static/uploads/rhype
+
+template:
+  bootstrap: 5
+  bootswatch: lumen
+
+authors:
+  Hugh Warden:
+    href: https://hwarden.com
+

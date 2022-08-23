@@ -66,8 +66,113 @@ degree <- function(hype, method = NA) {
     # Finding the incidence matrix
     inc_mat <- incidence_matrix(hype)
     # Normalising the incidence matrix
-    inc_mat <- matrix(as.numeric(inc_mat != 0), nrow = dim(inc_mat)[1])
+    inc_mat <- matrix(
+      as.numeric(inc_mat != 0),
+      nrow = dim(inc_mat)[1],
+      dimnames = dimnames(inc_mat)
+    )
     # Row summing the incidence matrix and returning this value
     return(apply(inc_mat, 1, sum))
   }
+}
+
+#' Find The Maximum Degree Of A Hypergraph
+#'
+#' The degree of a vertex is a way of expressing how many connections there
+#' are from a vertex to the rest of the hypergraph. See the `degree` help
+#' documentation for more details.
+#'
+#' @param hype A hypergraph object.
+#' @param method The method by which to calculate the degree, see `degree` help
+#' documentation for more information.
+#'
+#' @return The maximum value for the chosen degree among vertices of the hypergraph.
+#' @export
+#'
+#' @examples
+#' h <- example_hype()
+#' max_degree(h)
+max_degree <- function(hype, method = NA) {
+  deg <- degree(hype, method = method)
+  return(max(deg))
+}
+
+#' Find The Minimum Degree Of A Hypergraph
+#'
+#' The degree of a vertex is a way of expressing how many connections there
+#' are from a vertex to the rest of the hypergraph. See the `degree` help
+#' documentation for more details.
+#'
+#' @param hype A hypergraph object.
+#' @param method The method by which to calculate the degree, see `degree` help
+#' documentation for more information.
+#'
+#' @return The maximum value for the chosen degree among vertices of the hypergraph.
+#' @export
+#'
+#' @examples
+#' h <- example_hype()
+#' min_degree(h)
+min_degree <- function(hype, method = NA) {
+  deg <- degree(hype, method = method)
+  return(min(deg))
+}
+
+#' Find The Cardinality Of Hyperedges In A Hypergraph
+#'
+#' The cardinality of a hyperedge is the number of vertices that it contains.
+#'
+#' @param hype A hypergraph object.
+#'
+#' @return A vector of the cardinality of the hyperedges.
+#' @export
+#'
+#' @examples
+#' hype <- example_hype()
+#' cardinality(hype)
+cardinality <- function(hype) {
+  if (hype$get_oriented()) {
+    stop("\n \u2716 This function is not yet available for oriented hypergraphs")
+  }
+  if (hype$get_real_coef()) {
+    stop("\n \2716 This function is not yet supported for hypergraphs with real coefficients")
+  }
+
+  inc_mat <- incidence_matrix(hype)
+  card <- apply(inc_mat, 2, sum)
+  return(card)
+}
+
+#' Find The Maximum Cardinality Of A Hyperedge In A Hypergraph
+#'
+#' The cardinality of a hyperedge is the number of vertices that it contains.
+#'
+#' @param hype A hypergraph object.
+#'
+#' @return The value of the maximum cardinality of a hyperedge in the hypergraph.
+#' @export
+#'
+#' @examples
+#' hype <- example_hype()
+#' max_cardinality(hype)
+max_cardinality <- function(hype) {
+  card <- cardinality(hype)
+  return(max(card))
+}
+
+#' Find The Minimum Cardinality Of A Hyperedge In A Hypergraph
+#'
+#' The cardinality of a hyperedge is the number of vertices that it contains.
+#'
+#' @param hype A hypergraph object.
+#'
+#' @return The value of the minimum cardinality of a hyperedge in the hypergraph.
+#' @export
+#'
+#' @examples
+#' hype <- example_hype()
+#' min_cardinality(hype)
+min_cardinality <- function(hype) {
+  card <- cardinality(hype)
+  return(min(card))
 }
