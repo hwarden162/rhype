@@ -250,7 +250,7 @@ hype_from_inc_mat <- function(inc_mat, directed = FALSE, real_coef = FALSE) {
     # Generating hyperedge list
     elist <- list()
     for (i in 1:nume) {
-      elist[[i]] <- which(inc_mat[,i] != 0)
+      elist[[i]] <- vnames[which(inc_mat[,i] != 0)]
       names(elist)[i] <- colnames(inc_mat)[i]
     }
 

@@ -54,8 +54,8 @@ example_hype <- function(oriented = FALSE,
     }
   } else {
     elist <- list(
-      c(1, 2, 3),
-      c(2, 3, 4)
+      paste0("v", 1:3),
+      paste0("v", 2:4)
     )
   }
 
