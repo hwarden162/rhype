@@ -3,8 +3,8 @@ test_that("hypergraph example works", {
   numv = 4
 
   elist <- list(
-    c(1, 2, 3),
-    c(2, 3, 4)
+    paste0("v", 1:3),
+    paste0("v", 2:4)
   )
 
   vnames <- paste0("v", 1:4)

@@ -4,8 +4,8 @@ test_that("getters and setters work", {
 
   test_elist <- hyperedge_list(hype)
   real_elist <- list(
-    h1 = 1:3,
-    h2 = 2:4
+    h1 = paste0("v", 1:3),
+    h2 = paste0("v", 2:4)
   )
   expect_equal(test_elist, real_elist)
 
