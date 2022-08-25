@@ -1,0 +1,42 @@
+`rhype`: Work With Hypergraphs In R
+================
+
+Hypergraphs are generalisations of graphs. Graphs connect together
+vertices in a binary manner, that is that (in a simple graph) each edge
+will connect two vertices. In a hypergraph, there are still vertices
+like there are in a graph, but edges are replaced with hyperedges that
+can connect together any number of vertices. This allows us to represent
+*higher order interactions* that are useful in the analysis of many
+systems.
+
+`rhype` allows the user to create hypergraph objects in R from different
+data structures. It then contains many functions for transforming the
+hypergraph or calculating properties of hypergraphs that may lead to
+deeper insights of the data that it represents.
+
+## Installation
+
+`rhype` is available from CRAN using
+
+``` r
+install.packages("rhype")
+```
+
+or the development version is available from GitHub using
+
+``` r
+remotes::install_github("hwarden162/rhype")
+```
+
+## Development Information
+
+`rhype` is currently undergoing a large rewrite. The main focus of this
+is to complete unit testing for all functions to cover unoriented
+hypergraphs with real coefficients. As this happens there will be bug
+fixes as well as updates to the way in which `rhype` stores hypergraph
+objects.
+
+Excitingly, on top of this the development version of `rhype`
+(v0.3.0.9000 currently avaliable on GitHub) now has functions for
+finding support graphs and connectivity graphs. These can be used
+together to find shortest hyperpaths between vertices.

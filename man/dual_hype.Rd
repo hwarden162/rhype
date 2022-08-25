@@ -19,5 +19,5 @@ hyperedge has the original vertex as a member.
 }
 \examples{
 hype <- example_hype()
-hype_dual(hype)
+dual_hype(hype)
 }

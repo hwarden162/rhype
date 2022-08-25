@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' hype <- example_hype()
-#' hype_dual(hype)
+#' dual_hype(hype)
 dual_hype <- function(hype) {
   if (hype$get_oriented()) {
     stop("\n \u2716 This function is currently not available for oriented hypergraphs")

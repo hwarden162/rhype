@@ -1,0 +1,123 @@
+---
+title: "rhype"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{rhype}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction 
+
+`rhype` is a package for working with hypergraphs in R. It works under the general idea that data can be transformed into a hypergraph object and then there are many functions to manipulate and analyse this hypergraph object.
+
+# Installation
+
+`rhype` is available from CRAN using
+
+```{r installation instructions, eval=FALSE}
+install.packages("rhype")
+```
+
+or the development version is available from GitHub using
+
+```{r github installation instructions, eval=FALSE}
+remotes::install_github("hwarden162/rhype")
+```
+
+# Getting Started
+
+To get started with `rhype`, see these blog posts:
+
+- [Working With Hypergraphs In R](https://www.hwarden.com/project/rhype/working-with-hypergraphs-in-r-using-rhype/)
+- [Estimating Heterogeneity of scRNA-seq Data With rhype](https://www.hwarden.com/project/estimating-heterogeneity-of-scrna-seq-data-with-rhype/)
+
+Within `rhype`, there comes a new environment that saves all the information about a hypergraph. There are multiple functions for creating hypergraphs from your own data, but as well as this there is a function for generating example hypergraphs to test pipelines and run proof of concepts.
+
+```{r demonstrate hypergraphs}
+library(rhype)
+
+hype <- example_hype()
+hype
+```
+
+This is the basic output that a hypergraph object will print to the screen. To get more information, you can use the `hype_info` function, although this may be quite large for large hypergraphs.
+
+```{r showing hype_info}
+hype_info(hype)
+```
+
+Hypergraphs can be abstracted in many ways and can quickly become complicated, `rhype` is designed to make these abstractions as simple to work with as possible and design a simple interface to working with with many common hypergraph applications. An example of a very complex hypergraph:
+
+```{r complex hypergraph}
+hype1 <- example_hype(
+  oriented = TRUE,
+  directed = TRUE,
+  vertex_weighted = TRUE,
+  edge_weighted = TRUE,
+  real_coef = TRUE
+)
+
+hype_info(hype1)
+```
+
+`rhype` lowers the in level of technical knowledge needed for working with hypergraphs, providing a simple interface for exploring higher order interactions.
+
+# Advanced Functionality
+
+Hypergraph objects are R6 objects that have inherent properties describing their structure. These properties are private and need to be changed via public getter and setter functions, although at the moment these have no validation on them as this is taken care of within other functions. 
+
+The inherent properties of a hypergraph are:
+
+`numv`: The number of vertices in the hypergraph
+
+`elist`: The hyperedge list, a list of the vertices contained in each hyperedge  this structure is slightly more complicated for oriented hypergraphs)
+
+`vnames`: A vector of names of the vertices
+
+`vweights`: A vector of weights of the vertices
+
+`enames`: A vector of names of the hyperedges
+
+`eweights`: A vector of weights of the hyperedges
+
+`weighted`: Whether the hypergraph is weighted (a hypergraph is weighted if it has either or both vertex or hyperedge weights)
+
+`oriented`: Whether the hypergraph is oriented
+
+`directed`: Whether the hypergraph is directed (all directed hypergraphs are   oriented)
+
+`real_coef`: Whether the hypergraph has real coefficients associating vertices to  hyperedges
+
+`inc_mat`: A matrix of the real coefficients associating vertices to hyperedges, only present for hypergraphs with real coefficients (has a slightly different structure for oriented hypergraphs)
+
+It is encouraged to use these functions if `rhype` does not currently cater to your analytical needs, however, the way in which hypergraphs are represented may be changed and therefore so might these functions. This means that **there is no guarantee these functions will be present or work in the same way in the future**. If you are doing something that is not currently supported in `rhype` please wrap it in a function and make a pull request to the [GitHub repo](https://github.com/hwarden162/rhype), then the code will always be maintained and tested to work in future versions.
+
+These properties of the hypergraph interact with one another and so therefore making changes can break the integrity of the hypergraph object, causing further functions to fail. If you are changing the object directly and something is not working the `validate_hypergraph()` function is supplied as a first point of call for troubleshooting.
+
+```{r validate hypergraph}
+hype <- example_hype(
+  oriented = FALSE,
+  directed = FALSE,
+  edge_weighted = TRUE,
+  vertex_weighted = TRUE
+)
+
+hype$set_directed(TRUE)
+hype$set_numv(50)
+
+validate_hypergraph(hype)
+```
+
+As well as outputting to the screen this can also be used as a part of a validation function by setting it to return a boolean
+
+```{r validation function return}
+validate_hypergraph(hype, return = TRUE, verbose = FALSE)
+```
