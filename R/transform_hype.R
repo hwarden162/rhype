@@ -48,6 +48,6 @@ partial_hype <- function(hype, hyperedges) {
     stop("\n \u2716 This function is currently not available for weighted hypergraphs")
   }
   inc_mat <- incidence_matrix(hype)
-  new_inc_mat <- inc_mat[,hyperedges]
+  new_inc_mat <- inc_mat[,hyperedges, drop = FALSE]
   hype_from_inc_mat(new_inc_mat)
 }
