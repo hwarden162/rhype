@@ -9,7 +9,7 @@
 #' @return A vector of pseudo-inverted numbers
 pseudo_invert <- function(vec) {
   # Cycle through the vector
-  for (i in 1:length(vec)) {
+  for (i in seq_along(vec)) {
     # Invert the entry if it is non-zero
     if (vec[i] != 0) {
       vec[i] <- 1 / vec[i]
